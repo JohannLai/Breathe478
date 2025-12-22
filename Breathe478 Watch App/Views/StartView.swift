@@ -23,24 +23,22 @@ struct StartView: View {
     }
 
     var body: some View {
-        VStack(spacing: 4) {
-            Spacer()
-
-            // Flower Preview
-            BreathingFlower(scale: 0.6, isAnimating: true, phase: .none)
-                .frame(width: 80, height: 80)
-                .padding(.bottom, 8)
+        VStack(spacing: 2) {
+            // Flower Preview - compact for watch screen
+            BreathingFlower(scale: 0.6, isAnimating: true, phase: .none, size: 90)
+                .frame(width: 90, height: 90)
                 .id("StartFlower") // Keep state stable
 
             Text("4-7-8 Breathe")
-                .font(.system(.title3, design: .rounded, weight: .semibold))
+                .font(.system(.body, design: .rounded, weight: .semibold))
                 .foregroundColor(Theme.textPrimary)
+                .padding(.top, 4)
 
             // Duration/Cycle Selector
             Button {
                 showingCyclePicker = true
             } label: {
-                HStack(spacing: 6) {
+                HStack(spacing: 4) {
                     Text("\(viewModel.totalCycles) Cycles")
                         .foregroundColor(Theme.breatheTeal)
                         .fontWeight(.medium)
@@ -51,11 +49,11 @@ struct StartView: View {
                     Text(totalDurationText)
                         .foregroundColor(Theme.textSecondary)
                 }
-                .font(.system(.body, design: .rounded))
-                .padding(.horizontal, 16)
-                .padding(.vertical, 10)
+                .font(.system(.footnote, design: .rounded))
+                .padding(.horizontal, 12)
+                .padding(.vertical, 8)
                 .background(Color.white.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 20)) // More capsule-like
+                .clipShape(RoundedRectangle(cornerRadius: 16))
             }
             .buttonStyle(.plain)
             .padding(.top, 4)
@@ -65,12 +63,12 @@ struct StartView: View {
             // Start Button
             Button(action: onStart) {
                 Text(String(localized: "Start"))
-                    .font(.system(.title3, design: .rounded, weight: .semibold))
+                    .font(.system(.body, design: .rounded, weight: .semibold))
                     .frame(maxWidth: .infinity)
             }
             .primaryButtonStyle()
-            .padding(.horizontal)
-            .padding(.bottom, 8)
+            .padding(.horizontal, 12)
+            .padding(.bottom, 4)
         }
         .background(Theme.backgroundColor)
         .sheet(isPresented: $showingCyclePicker) {

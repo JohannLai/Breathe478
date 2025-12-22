@@ -5,15 +5,23 @@ struct BreathingFlower: View {
     let scale: CGFloat          // 0.2 (contracted) to 1.0 (expanded)
     let isAnimating: Bool
     var phase: BreathingPhase? = nil
+    var size: CGFloat = 160     // Container size, scales proportionally
     
     // HTML uses 6 petals
     private let petalCount = 6
     
-    // Sizing to match HTML proportions roughly
-    // HTML: Container 260px, Petal 130px (Petal is 0.5 of container)
-    // Watch screen width approx 160-190pt.
-    // Let's assume a container of 160pt. Petal = 80pt.
-    private let basePetalSize: CGFloat = 80
+    // Base reference size (160pt container with 80pt petals)
+    private let referenceSize: CGFloat = 160
+    
+    // Calculate proportional petal size based on container
+    private var petalSize: CGFloat {
+        (size / referenceSize) * 80
+    }
+    
+    // Calculate proportional max offset based on container
+    private var maxOffset: CGFloat {
+        (size / referenceSize) * 34
+    }
     
     // Rotation state for the "floating" effect during hold/idle
     @State private var floatingRotation: Double = 0
@@ -38,15 +46,12 @@ struct BreathingFlower: View {
     }
     
     // Calculate petal offset based on scale
-    // HTML Inhaling: translate(55px) from center.
-    // HTML Petal size 130px. 55px is approx 42% of petal size.
-    // If basePetalSize is 80, max offset should be approx 34.
     private var petalOffset: CGFloat {
         // Map 0.2...1.0 to 0...maxOffset
         // Contracted (0.2): 0 offset
-        // Expanded (1.0): 34 offset
+        // Expanded (1.0): maxOffset
         let normalized = max(0, (scale - 0.2) / 0.8)
-        return normalized * 34
+        return normalized * maxOffset
     }
     
     // Calculate rotation for each petal
@@ -60,7 +65,7 @@ struct BreathingFlower: View {
             // Petals
             ForEach(0..<petalCount, id: \.self) { index in
                 PetalCircle(color: petalColor)
-                    .frame(width: basePetalSize, height: basePetalSize)
+                    .frame(width: petalSize, height: petalSize)
                     // Offset moves them outward
                     .offset(x: petalOffset)
                     // Rotate to form the flower
