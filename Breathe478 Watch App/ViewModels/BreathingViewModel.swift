@@ -53,6 +53,12 @@ final class BreathingViewModel: ObservableObject {
         let remaining = currentPhaseDuration - phaseElapsedTime
         return max(0, Int(ceil(remaining)))
     }
+    
+    /// Current beat count (1, 2, 3...) - for sequential counting display
+    var currentBeat: Int {
+        let elapsed = Int(floor(phaseElapsedTime))
+        return min(elapsed + 1, Int(currentPhaseDuration))
+    }
 
     /// Progress within current phase (0.0 to 1.0)
     var phaseProgress: CGFloat {

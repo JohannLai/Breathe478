@@ -15,12 +15,12 @@ enum BreathingPhase: String, CaseIterable {
         }
     }
 
-    /// Localized display text for the phase
+    /// Localized display text for the phase (Apple Breathe style)
     var displayText: String {
         switch self {
-        case .inhale: return String(localized: "Inhale", comment: "Breathing phase: inhale")
+        case .inhale: return String(localized: "Inhale...", comment: "Breathing phase: inhale with ellipsis")
         case .hold: return String(localized: "Hold", comment: "Breathing phase: hold breath")
-        case .exhale: return String(localized: "Exhale", comment: "Breathing phase: exhale")
+        case .exhale: return String(localized: "Exhale.", comment: "Breathing phase: exhale with period")
         }
     }
 

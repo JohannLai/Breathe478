@@ -87,14 +87,14 @@ struct BreathingView: View {
                         .font(.system(.title3, design: .rounded, weight: .medium))
                         .foregroundColor(Theme.textPrimary)
                     
-                    // Countdown number
-                    // We use a fixed width/monospaced digit font to prevent jitter
-                    Text("\(viewModel.remainingSeconds)")
+                    // Sequential beat count (1, 2, 3...)
+                    // More mindful than countdown - focus on the current beat
+                    Text("\(viewModel.currentBeat)")
                         .font(.system(.title3, design: .rounded, weight: .medium))
                         .foregroundColor(Theme.textSecondary.opacity(0.8))
                         .monospacedDigit()
                         .transition(.opacity)
-                        .id("Countdown-\(viewModel.remainingSeconds)") // Force refresh for transition if needed
+                        .id("Beat-\(viewModel.currentBeat)")
                 }
                 .transition(.opacity)
             } else {

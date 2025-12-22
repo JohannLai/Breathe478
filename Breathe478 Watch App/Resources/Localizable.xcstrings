@@ -218,6 +218,23 @@
         }
       }
     },
+    "Exhale." : {
+      "comment" : "Breathing phase: exhale with period",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exhale."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "呼气。"
+          }
+        }
+      }
+    },
     "Get Ready..." : {
       "localizations" : {
         "en" : {
@@ -331,6 +348,23 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "吸气"
+          }
+        }
+      }
+    },
+    "Inhale..." : {
+      "comment" : "Breathing phase: inhale with ellipsis",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inhale..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "吸气..."
           }
         }
       }
