@@ -32,7 +32,8 @@ struct PreparationView: View {
                     .transition(.opacity)
                 } else {
                     // Countdown phase - Apple Style
-                    VStack {
+                    // Match BreathingView layout exactly for smooth transition
+                    VStack(spacing: 0) {
                         Spacer()
                         
                         // Small preview flower that breathes gently
@@ -55,10 +56,12 @@ struct PreparationView: View {
                         
                         Spacer()
                         
+                        // Match BreathingView's phaseText layout exactly
                         Text("Get Ready...")
                             .font(.system(.title3, design: .rounded, weight: .medium))
                             .foregroundColor(Theme.textSecondary)
                             .transition(.opacity)
+                            .frame(height: 30) // Same as BreathingView phaseText
                             .padding(.bottom, 20)
                     }
                 }
