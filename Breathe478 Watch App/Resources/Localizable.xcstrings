@@ -220,6 +220,7 @@
     },
     "Exhale." : {
       "comment" : "Breathing phase: exhale with period",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -354,6 +355,7 @@
     },
     "Inhale..." : {
       "comment" : "Breathing phase: inhale with ellipsis",
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {

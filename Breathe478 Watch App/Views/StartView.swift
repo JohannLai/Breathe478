@@ -1,5 +1,81 @@
 import SwiftUI
 
+/// Apple Watch screen size categories
+/// Based on screen height in points
+enum WatchSize {
+    case small      // Series 3 38mm (~170pt), SE/S4-6 40mm (~197pt)
+    case medium     // SE/S4-6 44mm (~224pt), S7-9 41mm (~215pt)
+    case large      // S7-9 45mm (~242pt), S10 42mm
+    case extraLarge // S10 46mm (~254pt), Ultra 49mm (~251pt)
+    
+    init(screenHeight: CGFloat) {
+        switch screenHeight {
+        case ..<200:
+            self = .small
+        case 200..<230:
+            self = .medium
+        case 230..<250:
+            self = .large
+        default:
+            self = .extraLarge
+        }
+    }
+    
+    var flowerSize: CGFloat {
+        switch self {
+        case .small: return 55
+        case .medium: return 70
+        case .large: return 85
+        case .extraLarge: return 110 // Ultra/S10 46mm - more spacious
+        }
+    }
+    
+    var titleFont: Font {
+        switch self {
+        case .small: return .system(.caption, design: .rounded, weight: .semibold)
+        case .medium: return .system(.footnote, design: .rounded, weight: .semibold)
+        case .large: return .system(.body, design: .rounded, weight: .semibold)
+        case .extraLarge: return .system(.title3, design: .rounded, weight: .semibold)
+        }
+    }
+    
+    var selectorFont: Font {
+        switch self {
+        case .small: return .system(.caption2, design: .rounded)
+        case .medium: return .system(.caption, design: .rounded)
+        case .large: return .system(.footnote, design: .rounded)
+        case .extraLarge: return .system(.body, design: .rounded)
+        }
+    }
+    
+    var buttonFont: Font {
+        switch self {
+        case .small: return .system(.caption, design: .rounded, weight: .semibold)
+        case .medium: return .system(.footnote, design: .rounded, weight: .semibold)
+        case .large: return .system(.body, design: .rounded, weight: .semibold)
+        case .extraLarge: return .system(.title3, design: .rounded, weight: .semibold)
+        }
+    }
+    
+    var horizontalPadding: CGFloat {
+        switch self {
+        case .small: return 8
+        case .medium: return 10
+        case .large: return 12
+        case .extraLarge: return 16
+        }
+    }
+    
+    var verticalSpacing: CGFloat {
+        switch self {
+        case .small: return 2
+        case .medium: return 4
+        case .large: return 6
+        case .extraLarge: return 10
+        }
+    }
+}
+
 /// Initial screen for setting up and starting a breathing session
 struct StartView: View {
     @ObservedObject var viewModel: BreathingViewModel
@@ -23,52 +99,57 @@ struct StartView: View {
     }
 
     var body: some View {
-        VStack(spacing: 2) {
-            // Flower Preview - compact for watch screen
-            BreathingFlower(scale: 0.6, isAnimating: true, phase: .none, size: 90)
-                .frame(width: 90, height: 90)
-                .id("StartFlower") // Keep state stable
-
-            Text("4-7-8 Breathe")
-                .font(.system(.body, design: .rounded, weight: .semibold))
-                .foregroundColor(Theme.textPrimary)
-                .padding(.top, 4)
-
-            // Duration/Cycle Selector
-            Button {
-                showingCyclePicker = true
-            } label: {
-                HStack(spacing: 4) {
-                    Text("\(viewModel.totalCycles) Cycles")
-                        .foregroundColor(Theme.breatheTeal)
-                        .fontWeight(.medium)
-                    
-                    Text("•")
-                        .foregroundColor(Theme.textTertiary)
-
-                    Text(totalDurationText)
-                        .foregroundColor(Theme.textSecondary)
-                }
-                .font(.system(.footnote, design: .rounded))
-                .padding(.horizontal, 12)
-                .padding(.vertical, 8)
-                .background(Color.white.opacity(0.12))
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-            }
-            .buttonStyle(.plain)
-            .padding(.top, 4)
+        GeometryReader { geometry in
+            let watchSize = WatchSize(screenHeight: geometry.size.height)
             
-            Spacer()
+            VStack(spacing: 0) {
+                // Flower Preview - adaptive size based on watch model
+                BreathingFlower(scale: 0.6, isAnimating: true, phase: .none, size: watchSize.flowerSize)
+                    .frame(width: watchSize.flowerSize, height: watchSize.flowerSize)
+                    .id("StartFlower")
 
-            // Start Button
-            Button(action: onStart) {
-                Text(String(localized: "Start"))
-                    .font(.system(.body, design: .rounded, weight: .semibold))
-                    .frame(maxWidth: .infinity)
+                Text("4-7-8 Breathe")
+                    .font(watchSize.titleFont)
+                    .foregroundColor(Theme.textPrimary)
+                    .padding(.top, watchSize.verticalSpacing)
+
+                // Duration/Cycle Selector
+                Button {
+                    showingCyclePicker = true
+                } label: {
+                    HStack(spacing: 4) {
+                        Text("\(viewModel.totalCycles) Cycles")
+                            .foregroundColor(Theme.breatheTeal)
+                            .fontWeight(.medium)
+                        
+                        Text("•")
+                            .foregroundColor(Theme.textTertiary)
+
+                        Text(totalDurationText)
+                            .foregroundColor(Theme.textSecondary)
+                    }
+                    .font(watchSize.selectorFont)
+                    .padding(.horizontal, watchSize.horizontalPadding)
+                    .padding(.vertical, watchSize.verticalSpacing + 4)
+                    .background(Color.white.opacity(0.12))
+                    .clipShape(RoundedRectangle(cornerRadius: 14))
+                }
+                .buttonStyle(.plain)
+                .padding(.top, watchSize.verticalSpacing)
+                
+                Spacer()
+
+                // Start Button
+                Button(action: onStart) {
+                    Text(String(localized: "Start"))
+                        .font(watchSize.buttonFont)
+                        .frame(maxWidth: .infinity)
+                }
+                .primaryButtonStyle()
+                .padding(.horizontal, watchSize.horizontalPadding)
+                .padding(.bottom, watchSize.verticalSpacing)
             }
-            .primaryButtonStyle()
-            .padding(.horizontal, 12)
-            .padding(.bottom, 4)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .background(Theme.backgroundColor)
         .sheet(isPresented: $showingCyclePicker) {

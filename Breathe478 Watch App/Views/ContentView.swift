@@ -1,6 +1,5 @@
 import SwiftUI
 import SwiftData
-import WatchKit
 
 /// Main content view with tab navigation
 struct ContentView: View {
@@ -8,7 +7,6 @@ struct ContentView: View {
     @StateObject private var viewModel = BreathingViewModel()
     @StateObject private var healthKitManager = HealthKitManager.shared
 
-    @State private var extendedSession: WKExtendedRuntimeSession?
     @State private var selectedTab: Tab = .breathe
 
     enum Tab {
@@ -35,13 +33,12 @@ struct ContentView: View {
         }
         .onChange(of: viewModel.state.isActive) { _, isActive in
             if isActive {
-                startExtendedSession()
+                // Start workout session to keep screen on
+                healthKitManager.startWorkoutSession()
             } else {
-                stopExtendedSession()
+                // End workout session
+                healthKitManager.endWorkoutSession()
             }
-        }
-        .onDisappear {
-            stopExtendedSession()
         }
     }
 
@@ -73,20 +70,6 @@ struct ContentView: View {
                 }
             )
         }
-    }
-
-    // MARK: - Extended Runtime Session
-
-    private func startExtendedSession() {
-        guard extendedSession == nil else { return }
-        let session = WKExtendedRuntimeSession()
-        session.start()
-        extendedSession = session
-    }
-
-    private func stopExtendedSession() {
-        extendedSession?.invalidate()
-        extendedSession = nil
     }
 }
 

@@ -33,8 +33,10 @@
 	<true/>
 	<key>WKBackgroundModes</key>
 	<array>
-		<string>self-care</string>
+		<string>workout-processing</string>
 	</array>
+	<key>WKSupportsAlwaysOnDisplay</key>
+	<true/>
 	<key>WKWatchOnly</key>
 	<true/>
 </dict>

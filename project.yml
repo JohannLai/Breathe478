@@ -2,7 +2,7 @@ name: Breathe478
 options:
   bundleIdPrefix: com.breathe478
   deploymentTarget:
-    watchOS: "11.0"
+    watchOS: "10.0"
   xcodeVersion: "16.0"
   generateEmptyDirectories: true
 
@@ -15,7 +15,7 @@ targets:
   Breathe478 Watch App:
     type: application
     platform: watchOS
-    deploymentTarget: "11.0"
+    deploymentTarget: "10.0"
     sources:
       - path: Breathe478 Watch App
         excludes:
@@ -36,3 +36,6 @@ targets:
       properties:
         com.apple.developer.healthkit: true
         com.apple.developer.healthkit.access: []
+    scheme:
+      testTargets: []
+      gatherCoverageData: false
