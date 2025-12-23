@@ -31,10 +31,6 @@
 	</array>
 	<key>WKApplication</key>
 	<true/>
-	<key>WKBackgroundModes</key>
-	<array>
-		<string>workout-processing</string>
-	</array>
 	<key>WKSupportsAlwaysOnDisplay</key>
 	<true/>
 	<key>WKWatchOnly</key>

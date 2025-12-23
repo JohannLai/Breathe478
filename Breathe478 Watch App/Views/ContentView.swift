@@ -31,15 +31,6 @@ struct ContentView: View {
                 await healthKitManager.requestAuthorization()
             }
         }
-        .onChange(of: viewModel.state.isActive) { _, isActive in
-            if isActive {
-                // Start workout session to keep screen on
-                healthKitManager.startWorkoutSession()
-            } else {
-                // End workout session
-                healthKitManager.endWorkoutSession()
-            }
-        }
     }
 
     @ViewBuilder

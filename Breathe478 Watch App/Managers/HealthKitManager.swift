@@ -11,26 +11,20 @@ final class HealthKitManager: NSObject, ObservableObject {
     @Published var isAuthorized = false
     @Published var latestHRV: Double?
     @Published var authorizationError: String?
-    @Published var isWorkoutSessionActive = false
-
-    // MARK: - Workout Session
-
-    private var workoutSession: HKWorkoutSession?
-    private var workoutBuilder: HKLiveWorkoutBuilder?
 
     // MARK: - HealthKit Types
 
     private let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
     private let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate)!
     private let mindfulType = HKCategoryType.categoryType(forIdentifier: .mindfulSession)!
-    private let activeEnergyType = HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
-
+    
+    // We only need read access for HRV/HR and write access for Mindful Minutes
     private var typesToRead: Set<HKSampleType> {
-        [hrvType, heartRateType]
+        [hrvType, heartRateType, mindfulType]
     }
 
     private var typesToWrite: Set<HKSampleType> {
-        [mindfulType, activeEnergyType, HKObjectType.workoutType()]
+        [mindfulType]
     }
 
     private override init() {
@@ -183,79 +177,6 @@ final class HealthKitManager: NSObject, ObservableObject {
         }
     }
 
-    // MARK: - Workout Session (keeps screen on)
-
-    /// Start a workout session to keep the screen awake
-    func startWorkoutSession() {
-        guard workoutSession == nil else {
-            print("[HealthKit] Workout session already active")
-            return
-        }
-
-        let configuration = HKWorkoutConfiguration()
-        configuration.activityType = .mindAndBody
-        configuration.locationType = .indoor
-
-        do {
-            workoutSession = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
-            workoutBuilder = workoutSession?.associatedWorkoutBuilder()
-
-            workoutSession?.delegate = self
-            workoutBuilder?.delegate = self
-
-            workoutBuilder?.dataSource = HKLiveWorkoutDataSource(
-                healthStore: healthStore,
-                workoutConfiguration: configuration
-            )
-
-            let startDate = Date()
-            workoutSession?.startActivity(with: startDate)
-            workoutBuilder?.beginCollection(withStart: startDate) { success, error in
-                if let error = error {
-                    print("[HealthKit] Failed to begin collection: \(error)")
-                } else {
-                    print("[HealthKit] Workout session started successfully")
-                }
-            }
-
-            isWorkoutSessionActive = true
-        } catch {
-            print("[HealthKit] Failed to create workout session: \(error)")
-        }
-    }
-
-    /// End the workout session
-    func endWorkoutSession() {
-        guard let session = workoutSession, let builder = workoutBuilder else {
-            print("[HealthKit] No active workout session to end")
-            return
-        }
-
-        session.end()
-
-        let endDate = Date()
-        builder.endCollection(withEnd: endDate) { [weak self] success, error in
-            if let error = error {
-                print("[HealthKit] Failed to end collection: \(error)")
-                return
-            }
-
-            builder.finishWorkout { workout, error in
-                if let error = error {
-                    print("[HealthKit] Failed to finish workout: \(error)")
-                } else {
-                    print("[HealthKit] Workout session ended and saved")
-                }
-
-                Task { @MainActor in
-                    self?.workoutSession = nil
-                    self?.workoutBuilder = nil
-                    self?.isWorkoutSessionActive = false
-                }
-            }
-        }
-    }
-
     // MARK: - Statistics
 
     /// Get total mindful minutes for a date range
@@ -334,35 +255,5 @@ extension HealthKitManager {
                 description: String(localized: "Excellent HRV! Your nervous system is well-regulated.")
             )
         }
-    }
-}
-
-// MARK: - HKWorkoutSessionDelegate
-
-extension HealthKitManager: HKWorkoutSessionDelegate {
-    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-        print("[HealthKit] Workout state changed: \(fromState.rawValue) -> \(toState.rawValue)")
-        Task { @MainActor in
-            self.isWorkoutSessionActive = (toState == .running)
-        }
-    }
-
-    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-        print("[HealthKit] Workout session failed: \(error)")
-        Task { @MainActor in
-            self.isWorkoutSessionActive = false
-        }
-    }
-}
-
-// MARK: - HKLiveWorkoutBuilderDelegate
-
-extension HealthKitManager: HKLiveWorkoutBuilderDelegate {
-    nonisolated func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
-        // Data collection callback - can be used to update UI with real-time data
-    }
-
-    nonisolated func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-        // Event collection callback
     }
 }

@@ -1,10 +1,11 @@
 import SwiftUI
 import SwiftData
 import Combine
+import WatchKit
 
 /// ViewModel managing the 4-7-8 breathing session with HRV tracking
 @MainActor
-final class BreathingViewModel: ObservableObject {
+final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSessionDelegate {
 
     // MARK: - Published Properties
 
@@ -32,6 +33,9 @@ final class BreathingViewModel: ObservableObject {
     private let hapticManager = HapticManager.shared
     private let healthKitManager = HealthKitManager.shared
     private let timerInterval: TimeInterval = 0.05
+    
+    // Extended Runtime Session for keeping screen on
+    private var extendedRuntimeSession: WKExtendedRuntimeSession?
 
     private var modelContext: ModelContext?
 
@@ -39,6 +43,21 @@ final class BreathingViewModel: ObservableObject {
 
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
+    }
+    
+    // MARK: - WKExtendedRuntimeSessionDelegate
+    
+    nonisolated func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
+        // Handle session invalidation if needed (e.g., system terminated it)
+        // Usually we just let it go as the session ends naturally
+    }
+    
+    nonisolated func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        // Session started successfully
+    }
+    
+    nonisolated func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        // Session is about to expire (rare for breathing apps unless very long)
     }
 
     // MARK: - Computed Properties
@@ -117,6 +136,11 @@ final class BreathingViewModel: ObservableObject {
 
     /// Start the session preparation (count in)
     func startSession() {
+        // Start Extended Runtime Session to keep screen on/haptics active
+        extendedRuntimeSession = WKExtendedRuntimeSession()
+        extendedRuntimeSession?.delegate = self
+        extendedRuntimeSession?.start()
+        
         // Reset state
         currentCycle = 1
         phaseElapsedTime = 0
@@ -222,6 +246,11 @@ final class BreathingViewModel: ObservableObject {
     /// Reset to ready state
     func reset() {
         stopTimers()
+        
+        // Invalidate extended runtime session
+        extendedRuntimeSession?.invalidate()
+        extendedRuntimeSession = nil
+        
         state = .ready
         currentCycle = 1
         phaseElapsedTime = 0
@@ -237,6 +266,10 @@ final class BreathingViewModel: ObservableObject {
 
     /// Finalize session: measure HRV after, save to HealthKit and SwiftData
     private func finalizeSession() async {
+        // Invalidate session when done
+        extendedRuntimeSession?.invalidate()
+        extendedRuntimeSession = nil
+        
         guard let startTime = sessionStartTime else { return }
         let endTime = Date()
 
