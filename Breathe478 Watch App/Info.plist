@@ -33,6 +33,10 @@
 	<true/>
 	<key>WKSupportsAlwaysOnDisplay</key>
 	<true/>
+	<key>WKBackgroundModes</key>
+	<array>
+		<string>mindfulness</string>
+	</array>
 	<key>WKWatchOnly</key>
 	<true/>
 </dict>

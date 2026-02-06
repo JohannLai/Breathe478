@@ -42,15 +42,6 @@ enum BreathingPhase: String, CaseIterable {
         }
     }
 
-    /// Interval for haptic feedback during this phase (nil means no continuous haptics)
-    var hapticInterval: TimeInterval? {
-        switch self {
-        case .inhale: return 1.0  // 1 tap per second
-        case .hold: return nil     // No haptics during hold
-        case .exhale: return 1.0   // 1 tap per second
-        }
-    }
-
     /// Total duration of one complete breathing cycle (4 + 7 + 8 = 19 seconds)
     static var cycleDuration: TimeInterval {
         return BreathingPhase.allCases.reduce(0) { $0 + $1.duration }

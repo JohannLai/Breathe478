@@ -49,8 +49,10 @@
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Breathe 478">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
@@ -58,7 +60,7 @@
             BlueprintName = "Breathe478 Watch App"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -66,8 +68,10 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
+      <RemoteRunnable
+         runnableDebuggingMode = "2"
+         BundleIdentifier = "com.apple.Carousel"
+         RemotePath = "/Breathe 478">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
@@ -75,7 +79,7 @@
             BlueprintName = "Breathe478 Watch App"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </RemoteRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

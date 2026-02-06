@@ -189,9 +189,8 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         // Start timers for breathing
         startTimers()
         
-        // Start haptics for first phase
-        hapticManager.playPhaseTransition(to: .inhale)
-        scheduleRhythmHaptics(for: .inhale)
+        // Start haptics for first phase (full Core Haptics pattern)
+        hapticManager.playPhasePattern(for: .inhale)
 
         // DELAY the animation target update.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -310,17 +309,15 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         phaseElapsedTime = 0
         state = .breathing(phase: phase)
 
-        // Play phase transition haptic
-        hapticManager.playPhaseTransition(to: phase)
+        // Play the full Core Haptics pattern for this phase
+        // This replaces both the phase transition haptic and rhythm haptics
+        hapticManager.playPhasePattern(for: phase)
 
         // Update animation
         updateAnimation(for: phase)
 
         // Start timers
         startTimers()
-
-        // Schedule first rhythm haptic if applicable
-        scheduleRhythmHaptics(for: phase)
     }
 
     private func startTimers() {
@@ -337,6 +334,8 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         phaseTimer = nil
         hapticTimer?.invalidate()
         hapticTimer = nil
+        // Stop any playing Core Haptics pattern
+        hapticManager.stopCurrentPattern()
     }
 
     private func timerTick() {
@@ -379,24 +378,5 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     private func updateAnimation(for phase: BreathingPhase) {
         // 直接设置目标值，让 View 层处理动画
         animationScale = phase.targetScale
-    }
-
-    private func scheduleRhythmHaptics(for phase: BreathingPhase) {
-        hapticTimer?.invalidate()
-        hapticTimer = nil
-
-        guard let interval = phase.hapticInterval else { return }
-
-        // Start rhythm haptics after a short delay
-        hapticTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                guard let self = self,
-                      case .breathing(let currentPhase) = self.state,
-                      currentPhase == phase else {
-                    return
-                }
-                self.hapticManager.playRhythmClick()
-            }
-        }
     }
 }

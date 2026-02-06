@@ -31,6 +31,8 @@ targets:
         SWIFT_EMIT_LOC_STRINGS: YES
         MARKETING_VERSION: "1.0"
         CURRENT_PROJECT_VERSION: "1"
+        SKIP_INSTALL: NO
+        INSTALL_PATH: "$(LOCAL_APPS_DIR)"
     entitlements:
       path: Breathe478 Watch App/Breathe478.entitlements
       properties:
