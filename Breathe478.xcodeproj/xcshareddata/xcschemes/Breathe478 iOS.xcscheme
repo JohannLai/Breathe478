@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
+               BlueprintIdentifier = "6A1DA416D17437DD9F3D3A92"
                BuildableName = "Breathe478.app"
-               BlueprintName = "Breathe478 Watch App"
+               BlueprintName = "Breathe478 iOS"
                ReferencedContainer = "container:Breathe478.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -30,9 +30,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
+            BlueprintIdentifier = "6A1DA416D17437DD9F3D3A92"
             BuildableName = "Breathe478.app"
-            BlueprintName = "Breathe478 Watch App"
+            BlueprintName = "Breathe478 iOS"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -53,9 +53,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
+            BlueprintIdentifier = "6A1DA416D17437DD9F3D3A92"
             BuildableName = "Breathe478.app"
-            BlueprintName = "Breathe478 Watch App"
+            BlueprintName = "Breathe478 iOS"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -70,9 +70,9 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
+            BlueprintIdentifier = "6A1DA416D17437DD9F3D3A92"
             BuildableName = "Breathe478.app"
-            BlueprintName = "Breathe478 Watch App"
+            BlueprintName = "Breathe478 iOS"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

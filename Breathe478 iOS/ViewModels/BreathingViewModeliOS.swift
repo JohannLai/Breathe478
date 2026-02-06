@@ -1,11 +1,11 @@
 import SwiftUI
 import SwiftData
 import Combine
-import WatchKit
+import UIKit
 
-/// ViewModel managing the 4-7-8 breathing session with HRV tracking
+/// ViewModel managing the 4-7-8 breathing session for iOS
 @MainActor
-final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSessionDelegate {
+final class BreathingViewModeliOS: ObservableObject {
 
     // MARK: - Published Properties
 
@@ -13,9 +13,9 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     @Published var currentCycle: Int = 1
     @Published var totalCycles: Int = 4
     @Published var phaseElapsedTime: TimeInterval = 0
-    @Published var animationScale: CGFloat = 0.2  // 初始收缩状态 (Contracted)
+    @Published var animationScale: CGFloat = 0.2  // Initial contracted state
     @Published var sessionStartTime: Date?
-    
+
     // Preparation
     @Published var prepCountdown: Int = 3
 
@@ -29,35 +29,22 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     // MARK: - Private Properties
 
     private var phaseTimer: Timer?
-    private var hapticTimer: Timer?
-    private let hapticManager = HapticManager.shared
+    private let audioManager = AudioManageriOS.shared
+    private let hapticManager = HapticManageriOS.shared
     private let healthKitManager = HealthKitManager.shared
     private let timerInterval: TimeInterval = 0.05
-    
-    // Extended Runtime Session for keeping screen on
-    private var extendedRuntimeSession: WKExtendedRuntimeSession?
 
     private var modelContext: ModelContext?
+
+    // Settings
+    @AppStorage("soundEnabled") private var soundEnabled = true
+    @AppStorage("hapticEnabled") private var hapticEnabled = true
+    @AppStorage("screenAwakeEnabled") private var screenAwakeEnabled = true
 
     // MARK: - Initialization
 
     func setModelContext(_ context: ModelContext) {
         self.modelContext = context
-    }
-    
-    // MARK: - WKExtendedRuntimeSessionDelegate
-    
-    nonisolated func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: Error?) {
-        // Handle session invalidation if needed (e.g., system terminated it)
-        // Usually we just let it go as the session ends naturally
-    }
-    
-    nonisolated func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        // Session started successfully
-    }
-    
-    nonisolated func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
-        // Session is about to expire (rare for breathing apps unless very long)
     }
 
     // MARK: - Computed Properties
@@ -72,7 +59,7 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         let remaining = currentPhaseDuration - phaseElapsedTime
         return max(0, Int(ceil(remaining)))
     }
-    
+
     /// Current beat count (1, 2, 3...) - for sequential counting display
     var currentBeat: Int {
         let elapsed = Int(floor(phaseElapsedTime))
@@ -136,11 +123,11 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
 
     /// Start the session preparation (count in)
     func startSession() {
-        // Start Extended Runtime Session to keep screen on/haptics active
-        extendedRuntimeSession = WKExtendedRuntimeSession()
-        extendedRuntimeSession?.delegate = self
-        extendedRuntimeSession?.start()
-        
+        // Keep screen awake if enabled
+        if screenAwakeEnabled {
+            UIApplication.shared.isIdleTimerDisabled = true
+        }
+
         // Reset state
         currentCycle = 1
         phaseElapsedTime = 0
@@ -149,20 +136,20 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         hrvAfter = nil
         averageHeartRate = nil
         sessionSaved = false
-        
+
         // Start preparation
         state = .preparing
-        prepCountdown = 5 // 5 seconds to read instructions
-        
+        prepCountdown = 5
+
         // Start countdown timer for preparation
-        stopTimers() // Ensure clean slate
+        stopTimers()
         phaseTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { [weak self] timer in
             Task { @MainActor in
                 guard let self = self else { return }
                 if self.prepCountdown > 0 {
                     // Play haptic tick for the countdown (last 3 seconds)
-                    if self.prepCountdown <= 3 {
-                        self.hapticManager.playRhythmClick()
+                    if self.prepCountdown <= 3 && self.hapticEnabled {
+                        self.hapticManager.playTick()
                     }
                     self.prepCountdown -= 1
                 } else {
@@ -171,45 +158,38 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
                 }
             }
         }
-        
-        // Fetch baseline HRV in background (non-blocking) early
+
+        // Fetch baseline HRV in background
         Task {
+            await healthKitManager.requestAuthorization()
             hrvBefore = await healthKitManager.fetchLatestHRV()
         }
     }
-    
+
     /// Actually start the breathing cycle after preparation
     private func startBreathingCycle() {
-        guard state == .preparing else { return } // Avoid starting if cancelled
-        
-        sessionStartTime = Date()
-        animationScale = 0.2 // Start contracted
-        state = .breathing(phase: .inhale)
-        
-        // Start timers for breathing
-        startTimers()
-        
-        // Start haptics for first phase (full Core Haptics pattern)
-        hapticManager.playPhasePattern(for: .inhale)
+        guard state == .preparing else { return }
 
-        // DELAY the animation target update.
+        sessionStartTime = Date()
+        animationScale = 0.2
+        state = .breathing(phase: .inhale)
+
+        startTimers()
+        playPhaseStart(.inhale)
+
+        // Delay animation target update
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            // Check if we are still in the session
             if case .breathing = self.state {
-                 self.updateAnimation(for: .inhale)
+                self.updateAnimation(for: .inhale)
             }
         }
-    }
-
-    /// Alias for compatibility
-    func startSessionSync() {
-        startSession()
     }
 
     /// Pause the current session
     func pauseSession() {
         guard case .breathing(let phase) = state else { return }
         stopTimers()
+        audioManager.pause()
         state = .paused(previousPhase: phase)
     }
 
@@ -218,6 +198,7 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
         guard case .paused(let previousPhase) = state else { return }
         state = .breathing(phase: previousPhase)
         startTimers()
+        audioManager.resume()
         updateAnimation(for: previousPhase)
     }
 
@@ -236,7 +217,9 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     /// End the session early
     func endSession() {
         stopTimers()
+        audioManager.stop()
         state = .completed
+        UIApplication.shared.isIdleTimerDisabled = false
         Task {
             await finalizeSession()
         }
@@ -245,15 +228,13 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     /// Reset to ready state
     func reset() {
         stopTimers()
-        
-        // Invalidate extended runtime session
-        extendedRuntimeSession?.invalidate()
-        extendedRuntimeSession = nil
-        
+        audioManager.stop()
+        UIApplication.shared.isIdleTimerDisabled = false
+
         state = .ready
         currentCycle = 1
         phaseElapsedTime = 0
-        animationScale = 0.2  // Reset to contracted
+        animationScale = 0.2
         sessionStartTime = nil
         hrvBefore = nil
         hrvAfter = nil
@@ -263,20 +244,13 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
 
     // MARK: - Session Finalization
 
-    /// Finalize session: measure HRV after, save to HealthKit and SwiftData
     private func finalizeSession() async {
-        // Invalidate session when done
-        extendedRuntimeSession?.invalidate()
-        extendedRuntimeSession = nil
-        
         guard let startTime = sessionStartTime else { return }
         let endTime = Date()
 
         // Measure HRV after session
         isMeasuringHRV = true
         hrvAfter = await healthKitManager.fetchLatestHRV()
-
-        // Get average heart rate during session
         averageHeartRate = await healthKitManager.fetchAverageHeartRate(from: startTime, to: endTime)
         isMeasuringHRV = false
 
@@ -292,25 +266,14 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
             hrvBefore: hrvBefore,
             hrvAfter: hrvAfter,
             averageHeartRate: averageHeartRate,
-            syncedToHealthKit: syncedToHealthKit
+            syncedToHealthKit: syncedToHealthKit,
+            sourceDevice: "iPhone"
         )
 
         if let context = modelContext {
             context.insert(record)
             try? context.save()
         }
-
-        // Send session data to iPhone
-        WatchConnectivityManager.shared.sendSessionToiPhone(
-            startDate: startTime,
-            endDate: endTime,
-            cyclesCompleted: currentCycle,
-            duration: endTime.timeIntervalSince(startTime),
-            hrvBefore: hrvBefore,
-            hrvAfter: hrvAfter,
-            averageHeartRate: averageHeartRate,
-            syncedToHealthKit: syncedToHealthKit
-        )
 
         sessionSaved = true
     }
@@ -320,20 +283,21 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     private func startPhase(_ phase: BreathingPhase) {
         phaseElapsedTime = 0
         state = .breathing(phase: phase)
-
-        // Play the full Core Haptics pattern for this phase
-        // This replaces both the phase transition haptic and rhythm haptics
-        hapticManager.playPhasePattern(for: phase)
-
-        // Update animation
+        playPhaseStart(phase)
         updateAnimation(for: phase)
-
-        // Start timers
         startTimers()
     }
 
+    private func playPhaseStart(_ phase: BreathingPhase) {
+        if soundEnabled {
+            audioManager.playPhaseSound(phase)
+        }
+        if hapticEnabled {
+            hapticManager.playPhaseTransition(phase)
+        }
+    }
+
     private func startTimers() {
-        // Main phase timer
         phaseTimer = Timer.scheduledTimer(withTimeInterval: timerInterval, repeats: true) { [weak self] _ in
             Task { @MainActor in
                 self?.timerTick()
@@ -344,16 +308,18 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
     private func stopTimers() {
         phaseTimer?.invalidate()
         phaseTimer = nil
-        hapticTimer?.invalidate()
-        hapticTimer = nil
-        // Stop any playing Core Haptics pattern
-        hapticManager.stopCurrentPattern()
     }
 
     private func timerTick() {
         guard case .breathing(let phase) = state else { return }
 
+        let previousBeat = currentBeat
         phaseElapsedTime += timerInterval
+
+        // Play beat haptic on each second
+        if currentBeat != previousBeat && hapticEnabled {
+            hapticManager.playBeat()
+        }
 
         // Check if phase is complete
         if phaseElapsedTime >= phase.duration {
@@ -368,12 +334,20 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
 
         // Check if we completed a cycle (exhale -> inhale)
         if currentPhase == .exhale {
-            hapticManager.playCycleComplete()
+            if hapticEnabled {
+                hapticManager.playCycleComplete()
+            }
 
             if currentCycle >= totalCycles {
                 // Session complete
-                hapticManager.playSessionComplete()
+                if hapticEnabled {
+                    hapticManager.playSessionComplete()
+                }
+                if soundEnabled {
+                    audioManager.playCompletion()
+                }
                 state = .completed
+                UIApplication.shared.isIdleTimerDisabled = false
                 Task {
                     await finalizeSession()
                 }
@@ -383,12 +357,10 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
             }
         }
 
-        // Start next phase
         startPhase(nextPhase)
     }
 
     private func updateAnimation(for phase: BreathingPhase) {
-        // 直接设置目标值，让 View 层处理动画
         animationScale = phase.targetScale
     }
 }

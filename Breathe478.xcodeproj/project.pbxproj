@@ -3,85 +3,145 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 63;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		03DC1EE3787773A0FE8F996D /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22B46D0AB4F34DA2A945C0F5 /* Theme.swift */; };
+		06298C6460CB97A0A05ADE25 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6079CA70B48B51564D47E8E9 /* Theme.swift */; };
+		0642E0C4EF2A49946E125A6C /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC9164EB2702A14FF2ED1A22 /* InsightsView.swift */; };
+		0B5F1CEF728B910343FAEE9F /* BreathingViewModeliOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BDE3A404A68191B0859D8AE /* BreathingViewModeliOS.swift */; };
+		0FC33DC389EBE739287AA800 /* BreathingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4667C262C71A4308743B9 /* BreathingState.swift */; };
+		144360D4B16DA5A67451C335 /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC35624BB55A43340DA9D45 /* SessionRecord.swift */; };
 		1E310BDEA449C73E0782B081 /* PreparationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A329E59A48E2699AC2900AA /* PreparationView.swift */; };
-		24DD5215EE651AC1CED2C9C6 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 947F59E9C02D66D71D27BD46 /* HealthKitManager.swift */; };
+		2284AD91B8B03D1F4F550AF2 /* BreathingSessionViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1A118EF2F6C52C2A07B517 /* BreathingSessionViewiOS.swift */; };
+		252E2EAFB7EEA92404F92891 /* CompletionViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAAEEF464426BBE1F12436 /* CompletionViewiOS.swift */; };
 		343D8E458DB14855641E38D7 /* BreathingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107BDFA73C169DA48C48B11E /* BreathingViewModel.swift */; };
+		3F6845CB9F07AF39EF38ECDD /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1115C9D6AAAE21868E721 /* WatchConnectivityManager.swift */; };
 		42900BA1C97851BA04D67C7C /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45718F2D8FBE8B9E401056E /* CompletionView.swift */; };
-		45DDF4AF712805F15D0CDDB0 /* BreathingPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490C2BDF3C93E2329E6995D3 /* BreathingPhase.swift */; };
-		49558BEBAF6C839185C17166 /* PetalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD088731F55B2D5D9685169C /* PetalView.swift */; };
-		632659DA4ED702725FEB3B6E /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10AD7E1026C6A7C471F8DB5 /* SessionRecord.swift */; };
+		439F570C0CA9064A97F661E1 /* BreathingFlower.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82BBCF13128F3353F425AD1 /* BreathingFlower.swift */; };
+		58EBD937A34AEE5B4B1CB0CA /* HRVDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EA71A7B719C61ED7EF467E1 /* HRVDetailView.swift */; };
+		6119D503469463175ED769D8 /* BreathingFlower.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82BBCF13128F3353F425AD1 /* BreathingFlower.swift */; };
+		62CA410E07AD3A5F502D7D09 /* Breathe478iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 61AB6F8F4AEB893B9468B6D0 /* Breathe478iOSApp.swift */; };
+		674645DAC33C0870C9DE6D54 /* StartViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F1EF6222CCB263E4C004FCA /* StartViewiOS.swift */; };
+		680A0C0594CDB031FC3F90FB /* BreathingPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADA62891B3D8D60BBF3FA35 /* BreathingPhase.swift */; };
 		74303050E55822986C06FBB2 /* BreathingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDB1498E5F20183BAF0E575B /* BreathingView.swift */; };
-		83B1F76F0EDB9361FBCBB596 /* BreathingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35A9BE383BFBE1025FA0141 /* BreathingState.swift */; };
+		78CE5EC49F1447063B4666D7 /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878F06763B904027240D068 /* HealthKitManager.swift */; };
+		8252D8253E43092178901B35 /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6079CA70B48B51564D47E8E9 /* Theme.swift */; };
+		887D2D70A7E695F8C4CF2C0E /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC35624BB55A43340DA9D45 /* SessionRecord.swift */; };
 		8A0B6C26DDD8805948E9CD59 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8042E2A8628D79ABEA76D21 /* StatisticsView.swift */; };
 		8AE9C2E4CD22AB5FE8EC78A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F583DE34645A6A0D9BA08A7 /* Assets.xcassets */; };
 		92017967F9BBEE01D438DECB /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F2F53E79EF0FA8BECAD725 /* Assets 2.xcassets */; };
 		979F1A6E2DFB624F25E95EF0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 43576431E737269DBA8CB69C /* Localizable.xcstrings */; };
+		99AD8A8FB2DA0E8974F26E29 /* AudioManageriOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7650B58BDB392D0E523E6390 /* AudioManageriOS.swift */; };
 		9BDF261D300F9BD9A9F0DF1E /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E3CFA1D76D7ACD9C256D7 /* StartView.swift */; };
 		9FE0DCF158EB69C1EAF3199E /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DED50FEEFD7853FB3C5BE86 /* HapticManager.swift */; };
+		9FEF2AF8449AC2310D9F6380 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379A0BFAB7C4BEFE00DC3EE /* HistoryView.swift */; };
+		A3755ADDE76E6323033A0AF8 /* BreathingPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADA62891B3D8D60BBF3FA35 /* BreathingPhase.swift */; };
+		AABB89F251E2FDAE28E44375 /* BreatheTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7ED294FB226455DC9A6B7C0 /* BreatheTab.swift */; };
+		AD2AEFAEB0F35681D8D1B851 /* HapticManageriOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C96952A939EF66D5D3E36F3 /* HapticManageriOS.swift */; };
+		AFDB2E3655E039B1D53BFCD8 /* MainTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C61A522E556F1513EB04E06B /* MainTabView.swift */; };
+		B490099E0605B73767BD65D4 /* PreparationViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 06026920D275A31AAAF66ADB /* PreparationViewiOS.swift */; };
+		BCE177AD329E560C6C733F4D /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C9DBCFE619DEB2B969F95A22 /* SettingsView.swift */; };
+		C0997DDAE1664073D3D4D52D /* BreathingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4667C262C71A4308743B9 /* BreathingState.swift */; };
 		C235FF23AD854395EFB83EC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17038799AC2672F1060230 /* ContentView.swift */; };
+		C984613E9A7E6D6AA11DF8AC /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878F06763B904027240D068 /* HealthKitManager.swift */; };
 		FD5ACFFAA5D3377C6B583C7C /* Breathe478App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF329C9AD6CB116F3AAD6829 /* Breathe478App.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		02F2F53E79EF0FA8BECAD725 /* Assets 2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 2.xcassets"; sourceTree = "<group>"; };
+		06026920D275A31AAAF66ADB /* PreparationViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationViewiOS.swift; sourceTree = "<group>"; };
+		0AD569CFD5AC6B72D66CBED2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0C96952A939EF66D5D3E36F3 /* HapticManageriOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManageriOS.swift; sourceTree = "<group>"; };
+		0F1EF6222CCB263E4C004FCA /* StartViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewiOS.swift; sourceTree = "<group>"; };
 		107BDFA73C169DA48C48B11E /* BreathingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingViewModel.swift; sourceTree = "<group>"; };
+		1379A0BFAB7C4BEFE00DC3EE /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		148E3CFA1D76D7ACD9C256D7 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
+		15EAAEEF464426BBE1F12436 /* CompletionViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionViewiOS.swift; sourceTree = "<group>"; };
 		1F583DE34645A6A0D9BA08A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		22B46D0AB4F34DA2A945C0F5 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		20EC2B3DB402F123F4BEA373 /* Breathe478iOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Breathe478iOS.entitlements; sourceTree = "<group>"; };
 		2DED50FEEFD7853FB3C5BE86 /* HapticManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManager.swift; sourceTree = "<group>"; };
+		2E1A118EF2F6C52C2A07B517 /* BreathingSessionViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingSessionViewiOS.swift; sourceTree = "<group>"; };
+		3CC35624BB55A43340DA9D45 /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
+		3E1324A3B2423948050A231D /* Breathe478 iOS.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = "Breathe478 iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3FF1115C9D6AAAE21868E721 /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		43576431E737269DBA8CB69C /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
-		490C2BDF3C93E2329E6995D3 /* BreathingPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingPhase.swift; sourceTree = "<group>"; };
+		4BDE3A404A68191B0859D8AE /* BreathingViewModeliOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingViewModeliOS.swift; sourceTree = "<group>"; };
+		6079CA70B48B51564D47E8E9 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		61AB6F8F4AEB893B9468B6D0 /* Breathe478iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breathe478iOSApp.swift; sourceTree = "<group>"; };
 		6A329E59A48E2699AC2900AA /* PreparationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationView.swift; sourceTree = "<group>"; };
-		947F59E9C02D66D71D27BD46 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
+		7650B58BDB392D0E523E6390 /* AudioManageriOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManageriOS.swift; sourceTree = "<group>"; };
+		7CD4667C262C71A4308743B9 /* BreathingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingState.swift; sourceTree = "<group>"; };
+		8878F06763B904027240D068 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		97C7D06BAE4BE3E8095C25F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9EA71A7B719C61ED7EF467E1 /* HRVDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HRVDetailView.swift; sourceTree = "<group>"; };
 		AC17038799AC2672F1060230 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		B10AD7E1026C6A7C471F8DB5 /* SessionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionRecord.swift; sourceTree = "<group>"; };
+		B82BBCF13128F3353F425AD1 /* BreathingFlower.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingFlower.swift; sourceTree = "<group>"; };
+		BADA62891B3D8D60BBF3FA35 /* BreathingPhase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingPhase.swift; sourceTree = "<group>"; };
 		C45718F2D8FBE8B9E401056E /* CompletionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionView.swift; sourceTree = "<group>"; };
-		C8704E42B0449BC7FCD231DD /* Breathe478.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Breathe478.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C61A522E556F1513EB04E06B /* MainTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabView.swift; sourceTree = "<group>"; };
+		C8704E42B0449BC7FCD231DD /* Breathe478 Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Breathe478 Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C9DBCFE619DEB2B969F95A22 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		CB6C902E7455B89961C7BDD2 /* Breathe478.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Breathe478.entitlements; sourceTree = "<group>"; };
 		CF329C9AD6CB116F3AAD6829 /* Breathe478App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breathe478App.swift; sourceTree = "<group>"; };
 		DDB1498E5F20183BAF0E575B /* BreathingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingView.swift; sourceTree = "<group>"; };
-		F35A9BE383BFBE1025FA0141 /* BreathingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingState.swift; sourceTree = "<group>"; };
+		E7ED294FB226455DC9A6B7C0 /* BreatheTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreatheTab.swift; sourceTree = "<group>"; };
+		EC9164EB2702A14FF2ED1A22 /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		F8042E2A8628D79ABEA76D21 /* StatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsView.swift; sourceTree = "<group>"; };
-		FD088731F55B2D5D9685169C /* PetalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PetalView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		0185EE99B64D2292A1898DF5 /* History */ = {
+			isa = PBXGroup;
+			children = (
+				1379A0BFAB7C4BEFE00DC3EE /* HistoryView.swift */,
+			);
+			path = History;
+			sourceTree = "<group>";
+		};
 		094C5B2289563CA1ACD5881D /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				DDB1498E5F20183BAF0E575B /* BreathingView.swift */,
 				C45718F2D8FBE8B9E401056E /* CompletionView.swift */,
 				AC17038799AC2672F1060230 /* ContentView.swift */,
-				FD088731F55B2D5D9685169C /* PetalView.swift */,
 				6A329E59A48E2699AC2900AA /* PreparationView.swift */,
 				148E3CFA1D76D7ACD9C256D7 /* StartView.swift */,
 				F8042E2A8628D79ABEA76D21 /* StatisticsView.swift */,
-				22B46D0AB4F34DA2A945C0F5 /* Theme.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
 		};
-		319B6570E259C9E85256ED32 /* Models */ = {
+		19F09A9816973ABE95AF4489 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				490C2BDF3C93E2329E6995D3 /* BreathingPhase.swift */,
-				F35A9BE383BFBE1025FA0141 /* BreathingState.swift */,
-				B10AD7E1026C6A7C471F8DB5 /* SessionRecord.swift */,
+				4BDE3A404A68191B0859D8AE /* BreathingViewModeliOS.swift */,
 			);
-			path = Models;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		3605A9D4A12208040C33D099 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
 				2DED50FEEFD7853FB3C5BE86 /* HapticManager.swift */,
-				947F59E9C02D66D71D27BD46 /* HealthKitManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		3ABF497209B83DAA7D58CD08 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				5FD328E57621AE9376140B68 /* Managers */,
+				BC93A0CFE5AAF9A676742801 /* Models */,
+				F0ACAFD53A8C8076F82164E2 /* Views */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		5FD328E57621AE9376140B68 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				8878F06763B904027240D068 /* HealthKitManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -89,9 +149,24 @@
 		6C0E7786FA333699089AF1CA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				C8704E42B0449BC7FCD231DD /* Breathe478.app */,
+				3E1324A3B2423948050A231D /* Breathe478 iOS.app */,
+				C8704E42B0449BC7FCD231DD /* Breathe478 Watch App.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		7762105BCAD3E819DEFB885D /* Breathe478 iOS */ = {
+			isa = PBXGroup;
+			children = (
+				20EC2B3DB402F123F4BEA373 /* Breathe478iOS.entitlements */,
+				61AB6F8F4AEB893B9468B6D0 /* Breathe478iOSApp.swift */,
+				0AD569CFD5AC6B72D66CBED2 /* Info.plist */,
+				B606588F7C873C2E34A8D355 /* Managers */,
+				A759C069ED421E0C815107E7 /* Resources */,
+				19F09A9816973ABE95AF4489 /* ViewModels */,
+				FD92560F0190224C72E766B1 /* Views */,
+			);
+			path = "Breathe478 iOS";
 			sourceTree = "<group>";
 		};
 		8301BD253A9FFB17DA17DE63 /* ViewModels */ = {
@@ -102,6 +177,50 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
+		8F9076A2CC68F75F00ED3D39 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				C9DBCFE619DEB2B969F95A22 /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A759C069ED421E0C815107E7 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A8099C255D3059E948BFAD8B /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				9EA71A7B719C61ED7EF467E1 /* HRVDetailView.swift */,
+				EC9164EB2702A14FF2ED1A22 /* InsightsView.swift */,
+			);
+			path = Insights;
+			sourceTree = "<group>";
+		};
+		B606588F7C873C2E34A8D355 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				7650B58BDB392D0E523E6390 /* AudioManageriOS.swift */,
+				0C96952A939EF66D5D3E36F3 /* HapticManageriOS.swift */,
+				3FF1115C9D6AAAE21868E721 /* WatchConnectivityManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		BC93A0CFE5AAF9A676742801 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BADA62891B3D8D60BBF3FA35 /* BreathingPhase.swift */,
+				7CD4667C262C71A4308743B9 /* BreathingState.swift */,
+				3CC35624BB55A43340DA9D45 /* SessionRecord.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E19FC7D1EC339D98C75530E6 /* Breathe478 Watch App */ = {
 			isa = PBXGroup;
 			children = (
@@ -109,7 +228,6 @@
 				CF329C9AD6CB116F3AAD6829 /* Breathe478App.swift */,
 				97C7D06BAE4BE3E8095C25F5 /* Info.plist */,
 				3605A9D4A12208040C33D099 /* Managers */,
-				319B6570E259C9E85256ED32 /* Models */,
 				ED83F7A5B5B723242D26D9A3 /* Resources */,
 				8301BD253A9FFB17DA17DE63 /* ViewModels */,
 				094C5B2289563CA1ACD5881D /* Views */,
@@ -127,17 +245,69 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		EEAFCA47592ECF8ECA33B8FD /* Breathe */ = {
+			isa = PBXGroup;
+			children = (
+				E7ED294FB226455DC9A6B7C0 /* BreatheTab.swift */,
+				2E1A118EF2F6C52C2A07B517 /* BreathingSessionViewiOS.swift */,
+				15EAAEEF464426BBE1F12436 /* CompletionViewiOS.swift */,
+				06026920D275A31AAAF66ADB /* PreparationViewiOS.swift */,
+				0F1EF6222CCB263E4C004FCA /* StartViewiOS.swift */,
+			);
+			path = Breathe;
+			sourceTree = "<group>";
+		};
+		F0ACAFD53A8C8076F82164E2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B82BBCF13128F3353F425AD1 /* BreathingFlower.swift */,
+				6079CA70B48B51564D47E8E9 /* Theme.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		FAB0FB8634C2D579A8A4B9A0 = {
 			isa = PBXGroup;
 			children = (
+				7762105BCAD3E819DEFB885D /* Breathe478 iOS */,
 				E19FC7D1EC339D98C75530E6 /* Breathe478 Watch App */,
+				3ABF497209B83DAA7D58CD08 /* Shared */,
 				6C0E7786FA333699089AF1CA /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		FD92560F0190224C72E766B1 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				C61A522E556F1513EB04E06B /* MainTabView.swift */,
+				EEAFCA47592ECF8ECA33B8FD /* Breathe */,
+				0185EE99B64D2292A1898DF5 /* History */,
+				A8099C255D3059E948BFAD8B /* Insights */,
+				8F9076A2CC68F75F00ED3D39 /* Settings */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6A1DA416D17437DD9F3D3A92 /* Breathe478 iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDBF6754983E12CC8CF7103B /* Build configuration list for PBXNativeTarget "Breathe478 iOS" */;
+			buildPhases = (
+				F83528639307605DD0C5C4FE /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Breathe478 iOS";
+			packageProductDependencies = (
+			);
+			productName = "Breathe478 iOS";
+			productReference = 3E1324A3B2423948050A231D /* Breathe478 iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
 		6E81C28FED66A1B5AAE14357 /* Breathe478 Watch App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1AEA1B50ADCADADDB0654370 /* Build configuration list for PBXNativeTarget "Breathe478 Watch App" */;
@@ -153,7 +323,7 @@
 			packageProductDependencies = (
 			);
 			productName = "Breathe478 Watch App";
-			productReference = C8704E42B0449BC7FCD231DD /* Breathe478.app */;
+			productReference = C8704E42B0449BC7FCD231DD /* Breathe478 Watch App.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -164,6 +334,14 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					6A1DA416D17437DD9F3D3A92 = {
+						DevelopmentTeam = 8BDAZ8X68U;
+					};
+					6E81C28FED66A1B5AAE14357 = {
+						DevelopmentTeam = 8BDAZ8X68U;
+					};
+				};
 			};
 			buildConfigurationList = C5379FCE7F111D5DF6335DB5 /* Build configuration list for PBXProject "Breathe478" */;
 			compatibilityVersion = "Xcode 14.0";
@@ -176,10 +354,12 @@
 			);
 			mainGroup = FAB0FB8634C2D579A8A4B9A0;
 			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
 				6E81C28FED66A1B5AAE14357 /* Breathe478 Watch App */,
+				6A1DA416D17437DD9F3D3A92 /* Breathe478 iOS */,
 			);
 		};
 /* End PBXProject section */
@@ -203,20 +383,48 @@
 			buildActionMask = 2147483647;
 			files = (
 				FD5ACFFAA5D3377C6B583C7C /* Breathe478App.swift in Sources */,
-				45DDF4AF712805F15D0CDDB0 /* BreathingPhase.swift in Sources */,
-				83B1F76F0EDB9361FBCBB596 /* BreathingState.swift in Sources */,
+				6119D503469463175ED769D8 /* BreathingFlower.swift in Sources */,
+				680A0C0594CDB031FC3F90FB /* BreathingPhase.swift in Sources */,
+				0FC33DC389EBE739287AA800 /* BreathingState.swift in Sources */,
 				74303050E55822986C06FBB2 /* BreathingView.swift in Sources */,
 				343D8E458DB14855641E38D7 /* BreathingViewModel.swift in Sources */,
 				42900BA1C97851BA04D67C7C /* CompletionView.swift in Sources */,
 				C235FF23AD854395EFB83EC0 /* ContentView.swift in Sources */,
 				9FE0DCF158EB69C1EAF3199E /* HapticManager.swift in Sources */,
-				24DD5215EE651AC1CED2C9C6 /* HealthKitManager.swift in Sources */,
-				49558BEBAF6C839185C17166 /* PetalView.swift in Sources */,
+				78CE5EC49F1447063B4666D7 /* HealthKitManager.swift in Sources */,
 				1E310BDEA449C73E0782B081 /* PreparationView.swift in Sources */,
-				632659DA4ED702725FEB3B6E /* SessionRecord.swift in Sources */,
+				887D2D70A7E695F8C4CF2C0E /* SessionRecord.swift in Sources */,
 				9BDF261D300F9BD9A9F0DF1E /* StartView.swift in Sources */,
 				8A0B6C26DDD8805948E9CD59 /* StatisticsView.swift in Sources */,
-				03DC1EE3787773A0FE8F996D /* Theme.swift in Sources */,
+				8252D8253E43092178901B35 /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F83528639307605DD0C5C4FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				99AD8A8FB2DA0E8974F26E29 /* AudioManageriOS.swift in Sources */,
+				62CA410E07AD3A5F502D7D09 /* Breathe478iOSApp.swift in Sources */,
+				AABB89F251E2FDAE28E44375 /* BreatheTab.swift in Sources */,
+				439F570C0CA9064A97F661E1 /* BreathingFlower.swift in Sources */,
+				A3755ADDE76E6323033A0AF8 /* BreathingPhase.swift in Sources */,
+				2284AD91B8B03D1F4F550AF2 /* BreathingSessionViewiOS.swift in Sources */,
+				C0997DDAE1664073D3D4D52D /* BreathingState.swift in Sources */,
+				0B5F1CEF728B910343FAEE9F /* BreathingViewModeliOS.swift in Sources */,
+				252E2EAFB7EEA92404F92891 /* CompletionViewiOS.swift in Sources */,
+				58EBD937A34AEE5B4B1CB0CA /* HRVDetailView.swift in Sources */,
+				AD2AEFAEB0F35681D8D1B851 /* HapticManageriOS.swift in Sources */,
+				C984613E9A7E6D6AA11DF8AC /* HealthKitManager.swift in Sources */,
+				9FEF2AF8449AC2310D9F6380 /* HistoryView.swift in Sources */,
+				0642E0C4EF2A49946E125A6C /* InsightsView.swift in Sources */,
+				AFDB2E3655E039B1D53BFCD8 /* MainTabView.swift in Sources */,
+				B490099E0605B73767BD65D4 /* PreparationViewiOS.swift in Sources */,
+				144360D4B16DA5A67451C335 /* SessionRecord.swift in Sources */,
+				BCE177AD329E560C6C733F4D /* SettingsView.swift in Sources */,
+				674645DAC33C0870C9DE6D54 /* StartViewiOS.swift in Sources */,
+				06298C6460CB97A0A05ADE25 /* Theme.swift in Sources */,
+				3F6845CB9F07AF39EF38ECDD /* WatchConnectivityManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -269,10 +477,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
@@ -332,15 +540,65 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = watchos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
 				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		7AE4904C869AFF3B1CAD0C8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Breathe478 iOS/Breathe478iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Breathe478 iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.ios;
+				PRODUCT_NAME = Breathe478;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BD8D4D343C5189908AB8F110 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "Breathe478 iOS/Breathe478iOS.entitlements";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Breathe478 iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.ios;
+				PRODUCT_NAME = Breathe478;
+				SDKROOT = iphoneos;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -350,18 +608,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Breathe478 Watch App/Breathe478.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8BDAZ8X68U;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Breathe478 Watch App/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Breath - 478";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.watchapp;
 				PRODUCT_NAME = Breathe478;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -376,18 +629,13 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Breathe478 Watch App/Breathe478.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 8BDAZ8X68U;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Breathe478 Watch App/Info.plist";
-				INFOPLIST_KEY_CFBundleDisplayName = "Breath - 478";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.watchapp;
 				PRODUCT_NAME = Breathe478;
-				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -413,6 +661,15 @@
 			buildConfigurations = (
 				667343FB4369BEAFB57D0961 /* Debug */,
 				2517933989998AF97D045B1E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		EDBF6754983E12CC8CF7103B /* Build configuration list for PBXNativeTarget "Breathe478 iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BD8D4D343C5189908AB8F110 /* Debug */,
+				7AE4904C869AFF3B1CAD0C8C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
