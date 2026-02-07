@@ -48,6 +48,7 @@ struct InsightsView: View {
             }
             .background(Theme.backgroundColor)
             .navigationTitle("Insights")
+            .navigationBarTitleDisplayMode(.large)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu {

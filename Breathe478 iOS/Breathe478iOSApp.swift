@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import UIKit
 
 @main
 struct Breathe478iOSApp: App {
@@ -16,9 +17,19 @@ struct Breathe478iOSApp: App {
         }
     }()
 
+    init() {
+        // Configure global appearance for dark theme
+        let tabBarAppearance = UITabBarAppearance()
+        tabBarAppearance.configureWithOpaqueBackground()
+        tabBarAppearance.backgroundColor = .black
+        UITabBar.appearance().standardAppearance = tabBarAppearance
+        UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+    }
+
     var body: some Scene {
         WindowGroup {
             MainTabView()
+                .preferredColorScheme(.dark)
                 .onReceive(NotificationCenter.default.publisher(for: .watchSessionReceived)) { notification in
                     handleWatchSession(notification.userInfo)
                 }

@@ -37,6 +37,49 @@ struct SettingsView: View {
                     }
                     .tint(Theme.primaryMint)
 
+                    // Haptic guide (shown when haptic is enabled)
+                    if hapticEnabled {
+                        VStack(alignment: .leading, spacing: 12) {
+                            HapticGuideRow(
+                                phase: "Inhale",
+                                duration: "4s",
+                                color: Theme.htmlTeal,
+                                icon: "arrow.up",
+                                description: "Accelerating pulses from slow to fast, guiding you to breathe in"
+                            )
+                            .onTapGesture {
+                                HapticManageriOS.shared.playInhalePattern(duration: 2.0)
+                            }
+
+                            Divider().background(Color.white.opacity(0.1))
+
+                            HapticGuideRow(
+                                phase: "Hold",
+                                duration: "7s",
+                                color: Theme.htmlGreen,
+                                icon: "pause",
+                                description: "Double-tap to start, steady heartbeat rhythm, double-tap to end"
+                            )
+                            .onTapGesture {
+                                HapticManageriOS.shared.playHoldPattern(duration: 3.0)
+                            }
+
+                            Divider().background(Color.white.opacity(0.1))
+
+                            HapticGuideRow(
+                                phase: "Exhale",
+                                duration: "8s",
+                                color: Theme.htmlBlue,
+                                icon: "arrow.down",
+                                description: "No vibration — focus on slowly releasing your breath"
+                            )
+                            .onTapGesture {
+                                HapticManageriOS.shared.playTick()
+                            }
+                        }
+                        .padding(.vertical, 4)
+                    }
+
                     // Screen awake toggle
                     Toggle(isOn: $screenAwakeEnabled) {
                         Label("Keep Screen On", systemImage: "sun.max")
@@ -103,6 +146,7 @@ struct SettingsView: View {
             .scrollContentBackground(.hidden)
             .background(Theme.backgroundColor)
             .navigationTitle("Settings")
+            .navigationBarTitleDisplayMode(.large)
             .sheet(isPresented: $showingAbout) {
                 AboutView()
             }
@@ -297,6 +341,49 @@ struct BenefitRow: View {
 
             Spacer()
         }
+    }
+}
+
+// MARK: - Haptic Guide Row
+
+struct HapticGuideRow: View {
+    let phase: String
+    let duration: String
+    let color: Color
+    let icon: String
+    let description: String
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 10) {
+            Image(systemName: icon)
+                .font(.system(size: 12, weight: .bold))
+                .foregroundColor(color)
+                .frame(width: 20, height: 20)
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    Text(phase)
+                        .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                        .foregroundColor(color)
+
+                    Text(duration)
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(Theme.textTertiary)
+
+                    Spacer()
+
+                    Text("Tap to feel")
+                        .font(.system(.caption2, design: .rounded))
+                        .foregroundColor(Theme.textTertiary.opacity(0.6))
+                }
+
+                Text(description)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundColor(Theme.textSecondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .contentShape(Rectangle())
     }
 }
 

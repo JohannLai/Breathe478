@@ -30,10 +30,10 @@
 		887D2D70A7E695F8C4CF2C0E /* SessionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3CC35624BB55A43340DA9D45 /* SessionRecord.swift */; };
 		8A0B6C26DDD8805948E9CD59 /* StatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8042E2A8628D79ABEA76D21 /* StatisticsView.swift */; };
 		8AE9C2E4CD22AB5FE8EC78A1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F583DE34645A6A0D9BA08A7 /* Assets.xcassets */; };
-		92017967F9BBEE01D438DECB /* Assets 2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02F2F53E79EF0FA8BECAD725 /* Assets 2.xcassets */; };
 		94B688D752ED8565B684C0E1 /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B333198BB5B30A1528215412 /* WatchConnectivityManager.swift */; };
 		979F1A6E2DFB624F25E95EF0 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 43576431E737269DBA8CB69C /* Localizable.xcstrings */; };
 		9BDF261D300F9BD9A9F0DF1E /* StartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 148E3CFA1D76D7ACD9C256D7 /* StartView.swift */; };
+		9BE02BB1D3053ED6A631B364 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E4C96957468851143A7F762 /* Assets.xcassets */; };
 		9FE0DCF158EB69C1EAF3199E /* HapticManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2DED50FEEFD7853FB3C5BE86 /* HapticManager.swift */; };
 		9FEF2AF8449AC2310D9F6380 /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1379A0BFAB7C4BEFE00DC3EE /* HistoryView.swift */; };
 		A3755ADDE76E6323033A0AF8 /* BreathingPhase.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADA62891B3D8D60BBF3FA35 /* BreathingPhase.swift */; };
@@ -49,7 +49,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		02F2F53E79EF0FA8BECAD725 /* Assets 2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Assets 2.xcassets"; sourceTree = "<group>"; };
 		06026920D275A31AAAF66ADB /* PreparationViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationViewiOS.swift; sourceTree = "<group>"; };
 		0AD569CFD5AC6B72D66CBED2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C96952A939EF66D5D3E36F3 /* HapticManageriOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManageriOS.swift; sourceTree = "<group>"; };
@@ -70,6 +69,7 @@
 		6079CA70B48B51564D47E8E9 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
 		61AB6F8F4AEB893B9468B6D0 /* Breathe478iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Breathe478iOSApp.swift; sourceTree = "<group>"; };
 		6A329E59A48E2699AC2900AA /* PreparationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationView.swift; sourceTree = "<group>"; };
+		6E4C96957468851143A7F762 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7CD4667C262C71A4308743B9 /* BreathingState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingState.swift; sourceTree = "<group>"; };
 		8878F06763B904027240D068 /* HealthKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitManager.swift; sourceTree = "<group>"; };
 		97C7D06BAE4BE3E8095C25F5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -189,6 +189,7 @@
 		A759C069ED421E0C815107E7 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				6E4C96957468851143A7F762 /* Assets.xcassets */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -238,7 +239,6 @@
 		ED83F7A5B5B723242D26D9A3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				02F2F53E79EF0FA8BECAD725 /* Assets 2.xcassets */,
 				1F583DE34645A6A0D9BA08A7 /* Assets.xcassets */,
 				43576431E737269DBA8CB69C /* Localizable.xcstrings */,
 			);
@@ -296,6 +296,7 @@
 			buildConfigurationList = EDBF6754983E12CC8CF7103B /* Build configuration list for PBXNativeTarget "Breathe478 iOS" */;
 			buildPhases = (
 				F83528639307605DD0C5C4FE /* Sources */,
+				8F5933D62904E3A83DCC9006 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -369,9 +370,16 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				92017967F9BBEE01D438DECB /* Assets 2.xcassets in Resources */,
 				8AE9C2E4CD22AB5FE8EC78A1 /* Assets.xcassets in Resources */,
 				979F1A6E2DFB624F25E95EF0 /* Localizable.xcstrings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F5933D62904E3A83DCC9006 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9BE02BB1D3053ED6A631B364 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

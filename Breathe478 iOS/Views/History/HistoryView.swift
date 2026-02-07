@@ -42,6 +42,7 @@ struct HistoryView: View {
             }
             .background(Theme.backgroundColor)
             .navigationTitle("History")
+            .navigationBarTitleDisplayMode(.large)
             .sheet(item: $selectedSession) { session in
                 SessionDetailSheet(session: session)
             }
