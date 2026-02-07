@@ -29,7 +29,6 @@ final class BreathingViewModeliOS: ObservableObject {
     // MARK: - Private Properties
 
     private var phaseTimer: Timer?
-    private let audioManager = AudioManageriOS.shared
     private let hapticManager = HapticManageriOS.shared
     private let healthKitManager = HealthKitManager.shared
     private let timerInterval: TimeInterval = 0.05
@@ -37,7 +36,6 @@ final class BreathingViewModeliOS: ObservableObject {
     private var modelContext: ModelContext?
 
     // Settings
-    @AppStorage("soundEnabled") private var soundEnabled = true
     @AppStorage("hapticEnabled") private var hapticEnabled = true
     @AppStorage("screenAwakeEnabled") private var screenAwakeEnabled = true
 
@@ -189,7 +187,6 @@ final class BreathingViewModeliOS: ObservableObject {
     func pauseSession() {
         guard case .breathing(let phase) = state else { return }
         stopTimers()
-        audioManager.pause()
         state = .paused(previousPhase: phase)
     }
 
@@ -198,7 +195,6 @@ final class BreathingViewModeliOS: ObservableObject {
         guard case .paused(let previousPhase) = state else { return }
         state = .breathing(phase: previousPhase)
         startTimers()
-        audioManager.resume()
         updateAnimation(for: previousPhase)
     }
 
@@ -217,7 +213,6 @@ final class BreathingViewModeliOS: ObservableObject {
     /// End the session early
     func endSession() {
         stopTimers()
-        audioManager.stop()
         state = .completed
         UIApplication.shared.isIdleTimerDisabled = false
         Task {
@@ -228,7 +223,6 @@ final class BreathingViewModeliOS: ObservableObject {
     /// Reset to ready state
     func reset() {
         stopTimers()
-        audioManager.stop()
         UIApplication.shared.isIdleTimerDisabled = false
 
         state = .ready
@@ -289,9 +283,6 @@ final class BreathingViewModeliOS: ObservableObject {
     }
 
     private func playPhaseStart(_ phase: BreathingPhase) {
-        if soundEnabled {
-            audioManager.playPhaseSound(phase)
-        }
         if hapticEnabled {
             hapticManager.playPhaseTransition(phase)
         }
@@ -334,17 +325,10 @@ final class BreathingViewModeliOS: ObservableObject {
 
         // Check if we completed a cycle (exhale -> inhale)
         if currentPhase == .exhale {
-            if hapticEnabled {
-                hapticManager.playCycleComplete()
-            }
-
             if currentCycle >= totalCycles {
                 // Session complete
                 if hapticEnabled {
                     hapticManager.playSessionComplete()
-                }
-                if soundEnabled {
-                    audioManager.playCompletion()
                 }
                 state = .completed
                 UIApplication.shared.isIdleTimerDisabled = false

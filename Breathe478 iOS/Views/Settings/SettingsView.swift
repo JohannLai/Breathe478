@@ -2,7 +2,6 @@ import SwiftUI
 
 /// Settings view for iOS app
 struct SettingsView: View {
-    @AppStorage("soundEnabled") private var soundEnabled = true
     @AppStorage("hapticEnabled") private var hapticEnabled = true
     @AppStorage("screenAwakeEnabled") private var screenAwakeEnabled = true
     @AppStorage("defaultCycles") private var defaultCycles = 4
@@ -30,13 +29,6 @@ struct SettingsView: View {
                         .pickerStyle(.menu)
                         .tint(Theme.primaryMint)
                     }
-
-                    // Sound toggle
-                    Toggle(isOn: $soundEnabled) {
-                        Label("Sound", systemImage: "speaker.wave.2")
-                            .foregroundColor(Theme.textPrimary)
-                    }
-                    .tint(Theme.primaryMint)
 
                     // Haptic toggle
                     Toggle(isOn: $hapticEnabled) {

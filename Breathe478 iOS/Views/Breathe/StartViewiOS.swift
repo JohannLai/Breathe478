@@ -1,5 +1,4 @@
 import SwiftUI
-import AudioToolbox
 import CoreHaptics
 
 /// Start view for iOS - larger display with more options
@@ -9,8 +8,6 @@ struct StartViewiOS: View {
 
     @State private var showingCyclePicker = false
     @State private var contentAppeared = false
-    @AppStorage("soundEnabled") private var soundEnabled = true
-    @AppStorage("hapticEnabled") private var hapticEnabled = true
 
     // Total duration calculation
     private var totalDurationText: String {
@@ -90,24 +87,6 @@ struct StartViewiOS: View {
 
             Spacer()
 
-            // Quick toggles
-            HStack(spacing: 16) {
-                ToggleChip(
-                    icon: "speaker.wave.2.fill",
-                    label: "Sound",
-                    isOn: $soundEnabled
-                )
-
-                ToggleChip(
-                    icon: "iphone.radiowaves.left.and.right",
-                    label: "Haptic",
-                    isOn: $hapticEnabled
-                )
-            }
-            .padding(.bottom, 24)
-            .opacity(contentAppeared ? 1 : 0)
-            .offset(y: contentAppeared ? 0 : 20)
-
             // Start Button
             Button(action: onStart) {
                 Text("Start")
@@ -140,32 +119,6 @@ struct StartViewiOS: View {
             .presentationDetents([.medium])
             .presentationDragIndicator(.visible)
         }
-    }
-}
-
-/// Toggle chip for quick settings
-struct ToggleChip: View {
-    let icon: String
-    let label: String
-    @Binding var isOn: Bool
-
-    var body: some View {
-        Button {
-            isOn.toggle()
-        } label: {
-            HStack(spacing: 8) {
-                Image(systemName: icon)
-                    .font(.system(size: 14))
-                Text(label)
-                    .font(.system(.subheadline, design: .rounded))
-            }
-            .foregroundColor(isOn ? Theme.breatheTeal : Theme.textTertiary)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 10)
-            .background(isOn ? Theme.breatheTeal.opacity(0.15) : Color.white.opacity(0.08))
-            .clipShape(RoundedRectangle(cornerRadius: 12))
-        }
-        .buttonStyle(.plain)
     }
 }
 
