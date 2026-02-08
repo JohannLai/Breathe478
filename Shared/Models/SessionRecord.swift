@@ -148,4 +148,11 @@ extension Array where Element == SessionRecord {
         let monthAgo = Calendar.current.date(byAdding: .day, value: -30, to: Date()) ?? Date()
         return filter { $0.startDate >= monthAgo }
     }
+
+    /// Average heart rate across sessions with data
+    var averageHeartRateValue: Double? {
+        let values = compactMap { $0.averageHeartRate }
+        guard !values.isEmpty else { return nil }
+        return values.reduce(0, +) / Double(values.count)
+    }
 }

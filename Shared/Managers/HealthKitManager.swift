@@ -27,6 +27,70 @@ final class HealthKitManager: NSObject, ObservableObject {
         [mindfulType]
     }
 
+    #if os(watchOS)
+    private var workoutTypesToWrite: Set<HKSampleType> {
+        [mindfulType, HKQuantityType.workoutType()]
+    }
+    #endif
+
+    #if os(watchOS)
+    // MARK: - Workout Session (watchOS only)
+
+    private var workoutSession: HKWorkoutSession?
+    private var workoutBuilder: HKLiveWorkoutBuilder?
+    @Published var isWorkoutActive = false
+
+    /// Start a workout session to activate heart rate sensor
+    func startWorkoutSession() async {
+        guard isHealthKitAvailable else { return }
+
+        let configuration = HKWorkoutConfiguration()
+        configuration.activityType = .mindAndBody
+        configuration.locationType = .indoor
+
+        do {
+            let session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
+            let builder = session.associatedWorkoutBuilder()
+
+            builder.dataSource = HKLiveWorkoutDataSource(
+                healthStore: healthStore,
+                workoutConfiguration: configuration
+            )
+
+            self.workoutSession = session
+            self.workoutBuilder = builder
+
+            session.delegate = self
+            builder.delegate = self
+
+            session.startActivity(with: Date())
+            try await builder.beginCollection(at: Date())
+
+            isWorkoutActive = true
+        } catch {
+            print("Failed to start workout session: \(error)")
+        }
+    }
+
+    /// End the workout session
+    func endWorkoutSession() async {
+        guard let session = workoutSession, let builder = workoutBuilder else { return }
+
+        session.end()
+
+        do {
+            try await builder.endCollection(at: Date())
+            try await builder.finishWorkout()
+        } catch {
+            print("Failed to end workout session: \(error)")
+        }
+
+        workoutSession = nil
+        workoutBuilder = nil
+        isWorkoutActive = false
+    }
+    #endif
+
     private override init() {
         super.init()
     }
@@ -126,12 +190,17 @@ final class HealthKitManager: NSObject, ObservableObject {
     }
 
     /// Fetch average heart rate for a time period
+    /// Extends the window slightly to capture heart rate samples around the session
     func fetchAverageHeartRate(from startDate: Date, to endDate: Date) async -> Double? {
         guard isHealthKitAvailable else { return nil }
 
+        // Extend window by 1 minute before and 2 minutes after to capture nearby HR samples
+        let adjustedStart = startDate.addingTimeInterval(-60)
+        let adjustedEnd = endDate.addingTimeInterval(120)
+
         let predicate = HKQuery.predicateForSamples(
-            withStart: startDate,
-            end: endDate,
+            withStart: adjustedStart,
+            end: adjustedEnd,
             options: .strictStartDate
         )
 
@@ -257,3 +326,27 @@ extension HealthKitManager {
         }
     }
 }
+
+// MARK: - Workout Session Delegates (watchOS only)
+
+#if os(watchOS)
+extension HealthKitManager: HKWorkoutSessionDelegate {
+    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
+        // State changes handled via isWorkoutActive
+    }
+
+    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
+        print("Workout session failed: \(error)")
+    }
+}
+
+extension HealthKitManager: HKLiveWorkoutBuilderDelegate {
+    nonisolated func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
+        // Not needed for our use case
+    }
+
+    nonisolated func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
+        // Heart rate data is being collected automatically
+    }
+}
+#endif

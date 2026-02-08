@@ -98,26 +98,38 @@ struct SummaryCard: View {
 
             Divider().background(Color.white.opacity(0.2))
 
-            // Week stats
-            HStack(spacing: 16) {
-                StatItem(
-                    value: "\(weekSessions.count)",
-                    label: String(localized: "Sessions"),
-                    icon: "figure.mind.and.body"
-                )
-
-                StatItem(
-                    value: formatDuration(weekSessions.totalDuration),
-                    label: String(localized: "Total Time"),
-                    icon: "clock.fill"
-                )
-
-                if let avgImprovement = weekSessions.averageHRVImprovement {
+            // Week stats - 2x2 grid
+            VStack(spacing: 8) {
+                HStack(spacing: 12) {
                     StatItem(
-                        value: String(format: "%+.0f%%", avgImprovement),
-                        label: "HRV",
-                        icon: "waveform.path.ecg"
+                        value: "\(weekSessions.count)",
+                        label: String(localized: "Sessions"),
+                        icon: "figure.mind.and.body"
                     )
+
+                    StatItem(
+                        value: formatDuration(weekSessions.totalDuration),
+                        label: String(localized: "Total Time"),
+                        icon: "clock.fill"
+                    )
+                }
+
+                HStack(spacing: 12) {
+                    if let avgImprovement = weekSessions.averageHRVImprovement {
+                        StatItem(
+                            value: String(format: "%+.0f%%", avgImprovement),
+                            label: "HRV",
+                            icon: "waveform.path.ecg"
+                        )
+                    }
+
+                    if let avgHR = weekSessions.averageHeartRateValue {
+                        StatItem(
+                            value: String(format: "%.0f", avgHR),
+                            label: String(localized: "Avg HR"),
+                            icon: "heart.fill"
+                        )
+                    }
                 }
             }
         }
@@ -151,6 +163,8 @@ struct StatItem: View {
             Text(value)
                 .font(.system(.caption, design: .rounded, weight: .semibold))
                 .foregroundColor(Theme.textPrimary)
+                .lineLimit(1)
+                .minimumScaleFactor(0.8)
             Text(label)
                 .font(.system(size: 9))
                 .foregroundColor(Theme.textTertiary)
@@ -304,10 +318,23 @@ struct SessionRow: View {
 
             Spacer()
 
-            if let improvement = session.hrvImprovement {
-                Text(String(format: "%+.0f%%", improvement))
-                    .font(.system(.caption2, design: .rounded, weight: .medium))
-                    .foregroundColor(improvement >= 0 ? .green : .red)
+            HStack(spacing: 8) {
+                if let improvement = session.hrvImprovement {
+                    Text(String(format: "%+.0f%%", improvement))
+                        .font(.system(.caption2, design: .rounded, weight: .medium))
+                        .foregroundColor(improvement >= 0 ? .green : .red)
+                }
+
+                if let avgHR = session.averageHeartRate {
+                    HStack(spacing: 2) {
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 8))
+                            .foregroundColor(.red)
+                        Text(String(format: "%.0f", avgHR))
+                            .font(.system(.caption2, design: .rounded, weight: .medium))
+                            .foregroundColor(Theme.textSecondary)
+                    }
+                }
             }
         }
         .padding(.vertical, 4)

@@ -414,6 +414,12 @@ struct QuickStatsCard: View {
                         label: "Avg HRV Improvement",
                         value: avgHRVImprovement
                     )
+
+                    QuickStatRow(
+                        icon: "heart.circle.fill",
+                        label: "Avg Heart Rate",
+                        value: avgHeartRate
+                    )
                 }
             }
         }
@@ -473,6 +479,13 @@ struct QuickStatsCard: View {
         guard !improvements.isEmpty else { return "-" }
         let avg = improvements.reduce(0, +) / Double(improvements.count)
         return String(format: "%+.1f%%", avg)
+    }
+
+    private var avgHeartRate: String {
+        let values = sessions.compactMap { $0.averageHeartRate }
+        guard !values.isEmpty else { return "-" }
+        let avg = values.reduce(0, +) / Double(values.count)
+        return String(format: "%.0f bpm", avg)
     }
 }
 

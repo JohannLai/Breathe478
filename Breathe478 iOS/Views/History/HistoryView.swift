@@ -139,6 +139,11 @@ struct SessionRowView: View {
                     StatPill(icon: "waveform.path.ecg", value: String(format: "%.0f", hrv))
                 }
 
+                // Heart rate if available (requires Apple Watch)
+                if watchManager.isWatchPaired, let avgHR = session.averageHeartRate {
+                    StatPill(icon: "heart.fill", value: String(format: "%.0f", avgHR))
+                }
+
                 // Device indicator
                 Image(systemName: session.sourceDevice == "iPhone" ? "iphone" : "applewatch")
                     .font(.system(size: 14))
