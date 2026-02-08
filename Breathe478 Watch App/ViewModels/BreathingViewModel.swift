@@ -368,7 +368,6 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
 
         // Check if we completed a cycle (exhale -> inhale)
         if currentPhase == .exhale {
-            hapticManager.playCycleComplete()
 
             if currentCycle >= totalCycles {
                 // Session complete
@@ -383,8 +382,11 @@ final class BreathingViewModel: NSObject, ObservableObject, WKExtendedRuntimeSes
             }
         }
 
-        // Start next phase
-        startPhase(nextPhase)
+        // Play transition cue for all phase transitions
+        hapticManager.playPhaseTransitionCue()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            self?.startPhase(nextPhase)
+        }
     }
 
     private func updateAnimation(for phase: BreathingPhase) {

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
-               BuildableName = "Breathe478.app"
+               BuildableName = "Breathe478 Watch App.app"
                BlueprintName = "Breathe478 Watch App"
                ReferencedContainer = "container:Breathe478.xcodeproj">
             </BuildableReference>
@@ -31,7 +31,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
-            BuildableName = "Breathe478.app"
+            BuildableName = "Breathe478 Watch App.app"
             BlueprintName = "Breathe478 Watch App"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
@@ -54,7 +54,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
-            BuildableName = "Breathe478.app"
+            BuildableName = "Breathe478 Watch App.app"
             BlueprintName = "Breathe478 Watch App"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>
@@ -71,7 +71,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E81C28FED66A1B5AAE14357"
-            BuildableName = "Breathe478.app"
+            BuildableName = "Breathe478 Watch App.app"
             BlueprintName = "Breathe478 Watch App"
             ReferencedContainer = "container:Breathe478.xcodeproj">
          </BuildableReference>

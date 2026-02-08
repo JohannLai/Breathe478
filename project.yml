@@ -41,6 +41,9 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
         TARGETED_DEVICE_FAMILY: "1,2"
+    dependencies:
+      - target: Breathe478 Watch App
+        embed: watch2
     entitlements:
       path: Breathe478 iOS/Breathe478iOS.entitlements
       properties:
@@ -70,8 +73,8 @@ targets:
           - Managers/HealthKitManager.swift
     settings:
       base:
-        PRODUCT_BUNDLE_IDENTIFIER: com.breathe478.watchapp
-        PRODUCT_NAME: "Breathe478"
+        PRODUCT_BUNDLE_IDENTIFIER: com.breathe478.ios.watchkitapp
+        PRODUCT_NAME: "Breathe478 Watch App"
         INFOPLIST_FILE: "Breathe478 Watch App/Info.plist"
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor

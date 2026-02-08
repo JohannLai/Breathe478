@@ -45,8 +45,33 @@
 		C0997DDAE1664073D3D4D52D /* BreathingState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CD4667C262C71A4308743B9 /* BreathingState.swift */; };
 		C235FF23AD854395EFB83EC0 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC17038799AC2672F1060230 /* ContentView.swift */; };
 		C984613E9A7E6D6AA11DF8AC /* HealthKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8878F06763B904027240D068 /* HealthKitManager.swift */; };
+		FBB7AAC80A68EFEE38FCF5E5 /* Breathe478 Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C8704E42B0449BC7FCD231DD /* Breathe478 Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		FD5ACFFAA5D3377C6B583C7C /* Breathe478App.swift in Sources */ = {isa = PBXBuildFile; fileRef = CF329C9AD6CB116F3AAD6829 /* Breathe478App.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C1E8B925FAA61C8F21DE2F0D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CE1856EF7AE99757C4026E36 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E81C28FED66A1B5AAE14357;
+			remoteInfo = "Breathe478 Watch App";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		071B202875444082F8E6DA50 /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				FBB7AAC80A68EFEE38FCF5E5 /* Breathe478 Watch App.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		06026920D275A31AAAF66ADB /* PreparationViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparationViewiOS.swift; sourceTree = "<group>"; };
@@ -297,10 +322,12 @@
 			buildPhases = (
 				F83528639307605DD0C5C4FE /* Sources */,
 				8F5933D62904E3A83DCC9006 /* Resources */,
+				071B202875444082F8E6DA50 /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				215E0D985755C8AD758973DA /* PBXTargetDependency */,
 			);
 			name = "Breathe478 iOS";
 			packageProductDependencies = (
@@ -437,6 +464,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		215E0D985755C8AD758973DA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6E81C28FED66A1B5AAE14357 /* Breathe478 Watch App */;
+			targetProxy = C1E8B925FAA61C8F21DE2F0D /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		2517933989998AF97D045B1E /* Release */ = {
@@ -621,8 +656,8 @@
 				INFOPLIST_FILE = "Breathe478 Watch App/Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.watchapp;
-				PRODUCT_NAME = Breathe478;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.ios.watchkitapp;
+				PRODUCT_NAME = "Breathe478 Watch App";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -642,8 +677,8 @@
 				INFOPLIST_FILE = "Breathe478 Watch App/Info.plist";
 				INSTALL_PATH = "$(LOCAL_APPS_DIR)";
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.watchapp;
-				PRODUCT_NAME = Breathe478;
+				PRODUCT_BUNDLE_IDENTIFIER = com.breathe478.ios.watchkitapp;
+				PRODUCT_NAME = "Breathe478 Watch App";
 				SDKROOT = watchos;
 				SKIP_INSTALL = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -37,7 +37,7 @@
 	<array>
 		<string>mindfulness</string>
 	</array>
-	<key>WKWatchOnly</key>
-	<true/>
+	<key>WKCompanionAppBundleIdentifier</key>
+	<string>com.breathe478.ios</string>
 </dict>
 </plist>
