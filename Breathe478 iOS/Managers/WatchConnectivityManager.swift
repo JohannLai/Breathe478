@@ -1,4 +1,5 @@
 import Foundation
+import SwiftData
 import WatchConnectivity
 
 /// Manages Watch connectivity for syncing session data between iPhone and Apple Watch
@@ -11,6 +12,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     @Published var lastSyncDate: Date?
 
     private var session: WCSession?
+    private var modelContainer: ModelContainer?
 
     override private init() {
         super.init()
@@ -20,6 +22,13 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             session?.delegate = self
             session?.activate()
         }
+    }
+
+    // MARK: - Configuration
+
+    /// Set the ModelContainer so we can save received sessions directly
+    func setModelContainer(_ container: ModelContainer) {
+        self.modelContainer = container
     }
 
     // MARK: - Public Methods
@@ -45,71 +54,81 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
             "sourceDevice": session.sourceDevice ?? "iPhone"
         ]
 
-        // Try to send immediately if reachable
-        if wcSession.isReachable {
-            wcSession.sendMessage(data, replyHandler: nil) { error in
-                print("Failed to send session to Watch: \(error.localizedDescription)")
-            }
-        } else {
-            // Use transferUserInfo for background delivery
-            wcSession.transferUserInfo(data)
-        }
-    }
-
-    /// Request session sync from Watch
-    func requestSyncFromWatch() {
-        guard let wcSession = session,
-              wcSession.isPaired,
-              wcSession.isReachable else {
-            return
-        }
-
-        let request: [String: Any] = ["type": "syncRequest"]
-        wcSession.sendMessage(request, replyHandler: { response in
-            // Handle incoming sessions from Watch
-            if let sessions = response["sessions"] as? [[String: Any]] {
-                Task { @MainActor in
-                    self.processSessions(sessions)
-                }
-            }
-        }, errorHandler: { error in
-            print("Sync request failed: \(error.localizedDescription)")
-        })
+        // Use transferUserInfo for reliable background delivery
+        wcSession.transferUserInfo(data)
     }
 
     // MARK: - Private Methods
 
-    private func processSessions(_ sessions: [[String: Any]]) {
-        // Process received sessions from Watch
-        for sessionData in sessions {
-            guard let startDate = sessionData["startDate"] as? TimeInterval,
-                  let endDate = sessionData["endDate"] as? TimeInterval,
-                  let cycles = sessionData["cyclesCompleted"] as? Int,
-                  let duration = sessionData["duration"] as? TimeInterval else {
-                continue
-            }
-
-            // Create SessionRecord and save to SwiftData
-            // This would require access to ModelContext
-            // For now, post notification for the app to handle
-            NotificationCenter.default.post(
-                name: .watchSessionReceived,
-                object: nil,
-                userInfo: [
-                    "startDate": Date(timeIntervalSince1970: startDate),
-                    "endDate": Date(timeIntervalSince1970: endDate),
-                    "cyclesCompleted": cycles,
-                    "duration": duration,
-                    "hrvBefore": sessionData["hrvBefore"] as? Double,
-                    "hrvAfter": sessionData["hrvAfter"] as? Double,
-                    "averageHeartRate": sessionData["averageHeartRate"] as? Double,
-                    "syncedToHealthKit": sessionData["syncedToHealthKit"] as? Bool ?? false,
-                    "sourceDevice": sessionData["sourceDevice"] as? String ?? "Apple Watch"
-                ]
-            )
+    /// Save a session from Watch into SwiftData, with deduplication
+    private func saveSessionFromWatch(_ sessionData: [String: Any]) {
+        guard let startTimestamp = sessionData["startDate"] as? TimeInterval,
+              let endTimestamp = sessionData["endDate"] as? TimeInterval,
+              let cycles = sessionData["cyclesCompleted"] as? Int,
+              let duration = sessionData["duration"] as? TimeInterval else {
+            return
         }
 
-        lastSyncDate = Date()
+        let startDate = Date(timeIntervalSince1970: startTimestamp)
+        let endDate = Date(timeIntervalSince1970: endTimestamp)
+
+        let hrvBefore: Double? = {
+            if let value = sessionData["hrvBefore"] as? Double, value >= 0 { return value }
+            return nil
+        }()
+        let hrvAfter: Double? = {
+            if let value = sessionData["hrvAfter"] as? Double, value >= 0 { return value }
+            return nil
+        }()
+        let averageHeartRate: Double? = {
+            if let value = sessionData["averageHeartRate"] as? Double, value >= 0 { return value }
+            return nil
+        }()
+        let syncedToHealthKit = sessionData["syncedToHealthKit"] as? Bool ?? false
+        let sourceDevice = sessionData["sourceDevice"] as? String ?? "Apple Watch"
+
+        guard let container = modelContainer else { return }
+
+        let context = ModelContext(container)
+
+        // Deduplicate: check if a session with the same startDate already exists
+        // Use a small time window (1 second) to handle floating point precision
+        let windowStart = startDate.addingTimeInterval(-0.5)
+        let windowEnd = startDate.addingTimeInterval(0.5)
+        let predicate = #Predicate<SessionRecord> { record in
+            record.startDate >= windowStart && record.startDate <= windowEnd
+        }
+        let descriptor = FetchDescriptor<SessionRecord>(predicate: predicate)
+
+        do {
+            let existing = try context.fetch(descriptor)
+            if !existing.isEmpty {
+                // Session already exists, skip
+                return
+            }
+        } catch {
+            // If fetch fails, proceed to insert (better to have a duplicate than lose data)
+        }
+
+        let record = SessionRecord(
+            startDate: startDate,
+            endDate: endDate,
+            cyclesCompleted: cycles,
+            duration: duration,
+            hrvBefore: hrvBefore,
+            hrvAfter: hrvAfter,
+            averageHeartRate: averageHeartRate,
+            syncedToHealthKit: syncedToHealthKit,
+            sourceDevice: sourceDevice
+        )
+
+        context.insert(record)
+        do {
+            try context.save()
+            lastSyncDate = Date()
+        } catch {
+            print("WatchConnectivity: Failed to save session: \(error.localizedDescription)")
+        }
     }
 
     private func updateSessionState() {
@@ -149,60 +168,36 @@ extension WatchConnectivityManager: WCSessionDelegate {
         }
     }
 
-    // Receive messages from Watch
+    // Receive user info transfers (reliable background delivery from Watch)
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
+        Task { @MainActor in
+            handleReceivedData(userInfo)
+        }
+    }
+
+    // Receive immediate messages from Watch (fallback, not currently used)
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         Task { @MainActor in
-            handleMessage(message)
+            handleReceivedData(message)
         }
     }
 
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String : Any], replyHandler: @escaping ([String : Any]) -> Void) {
         Task { @MainActor in
-            let response = handleMessageWithReply(message)
-            replyHandler(response)
-        }
-    }
-
-    // Receive user info transfers
-    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String : Any] = [:]) {
-        Task { @MainActor in
-            handleMessage(userInfo)
+            handleReceivedData(message)
+            replyHandler(["status": "ok"])
         }
     }
 
     @MainActor
-    private func handleMessage(_ message: [String: Any]) {
-        guard let type = message["type"] as? String else { return }
+    private func handleReceivedData(_ data: [String: Any]) {
+        guard let type = data["type"] as? String else { return }
 
         switch type {
         case "newSession":
-            processSessions([message])
-        case "syncRequest":
-            // Watch requesting sync - respond with local sessions
-            break
+            saveSessionFromWatch(data)
         default:
             break
         }
     }
-
-    @MainActor
-    private func handleMessageWithReply(_ message: [String: Any]) -> [String: Any] {
-        guard let type = message["type"] as? String else {
-            return ["error": "Unknown message type"]
-        }
-
-        switch type {
-        case "syncRequest":
-            // Return local sessions (would need ModelContext access)
-            return ["sessions": []]
-        default:
-            return ["error": "Unknown message type"]
-        }
-    }
-}
-
-// MARK: - Notification Names
-
-extension Notification.Name {
-    static let watchSessionReceived = Notification.Name("watchSessionReceived")
 }

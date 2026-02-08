@@ -24,69 +24,21 @@ struct Breathe478iOSApp: App {
         tabBarAppearance.backgroundColor = .black
         UITabBar.appearance().standardAppearance = tabBarAppearance
         UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+
+        // Activate WatchConnectivity early so it's ready to receive data
+        // The ModelContainer will be set in body via onAppear
+        _ = WatchConnectivityManager.shared
     }
 
     var body: some Scene {
         WindowGroup {
             MainTabView()
                 .preferredColorScheme(.dark)
-                .onReceive(NotificationCenter.default.publisher(for: .watchSessionReceived)) { notification in
-                    handleWatchSession(notification.userInfo)
+                .onAppear {
+                    // Give WatchConnectivityManager access to SwiftData for saving received sessions
+                    WatchConnectivityManager.shared.setModelContainer(sharedModelContainer)
                 }
         }
         .modelContainer(sharedModelContainer)
-    }
-
-    /// Handle incoming session data from Watch
-    private func handleWatchSession(_ userInfo: [AnyHashable: Any]?) {
-        guard let info = userInfo,
-              let startDate = info["startDate"] as? Date,
-              let endDate = info["endDate"] as? Date,
-              let cyclesCompleted = info["cyclesCompleted"] as? Int,
-              let duration = info["duration"] as? TimeInterval else {
-            return
-        }
-
-        // Parse optional HRV values (-1 means nil from Watch)
-        let hrvBefore: Double? = {
-            if let value = info["hrvBefore"] as? Double, value >= 0 {
-                return value
-            }
-            return nil
-        }()
-
-        let hrvAfter: Double? = {
-            if let value = info["hrvAfter"] as? Double, value >= 0 {
-                return value
-            }
-            return nil
-        }()
-
-        let averageHeartRate: Double? = {
-            if let value = info["averageHeartRate"] as? Double, value >= 0 {
-                return value
-            }
-            return nil
-        }()
-
-        let syncedToHealthKit = info["syncedToHealthKit"] as? Bool ?? false
-        let sourceDevice = info["sourceDevice"] as? String ?? "Apple Watch"
-
-        // Create and save the session record
-        let record = SessionRecord(
-            startDate: startDate,
-            endDate: endDate,
-            cyclesCompleted: cyclesCompleted,
-            duration: duration,
-            hrvBefore: hrvBefore,
-            hrvAfter: hrvAfter,
-            averageHeartRate: averageHeartRate,
-            syncedToHealthKit: syncedToHealthKit,
-            sourceDevice: sourceDevice
-        )
-
-        let context = sharedModelContainer.mainContext
-        context.insert(record)
-        try? context.save()
     }
 }

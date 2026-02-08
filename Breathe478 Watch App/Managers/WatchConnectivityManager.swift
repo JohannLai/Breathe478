@@ -50,14 +50,9 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
 
         // Use transferUserInfo for reliable background delivery
         // This ensures data is delivered even if iPhone is not immediately reachable
+        // Only use transferUserInfo (not sendMessage) to avoid duplicate delivery
+        print("📤 [Watch→iPhone] Sending session via transferUserInfo: \(cyclesCompleted) cycles, duration=\(duration)s")
         wcSession.transferUserInfo(data)
-
-        // Also try immediate delivery if reachable
-        if wcSession.isReachable {
-            wcSession.sendMessage(data, replyHandler: nil) { error in
-                print("WatchConnectivity: Failed to send immediate message: \(error.localizedDescription)")
-            }
-        }
     }
 
     // MARK: - Private Methods
