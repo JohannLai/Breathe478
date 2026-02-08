@@ -112,6 +112,7 @@ struct EmptyHistoryView: View {
 
 struct SessionRowView: View {
     let session: SessionRecord
+    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     var body: some View {
         HStack(spacing: 12) {
@@ -133,8 +134,8 @@ struct SessionRowView: View {
                 // Cycles
                 StatPill(icon: "repeat", value: "\(session.cyclesCompleted)")
 
-                // HRV if available
-                if let hrv = session.hrvAfter {
+                // HRV if available (requires Apple Watch)
+                if watchManager.isWatchPaired, let hrv = session.hrvAfter {
                     StatPill(icon: "waveform.path.ecg", value: String(format: "%.0f", hrv))
                 }
 
@@ -188,6 +189,7 @@ struct StatPill: View {
 struct SessionDetailSheet: View {
     let session: SessionRecord
     @Environment(\.dismiss) private var dismiss
+    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     var body: some View {
         NavigationStack {
@@ -233,8 +235,8 @@ struct SessionDetailSheet: View {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(.horizontal, 20)
 
-                    // HRV card if available
-                    if session.hrvBefore != nil || session.hrvAfter != nil {
+                    // HRV card if available (requires Apple Watch)
+                    if watchManager.isWatchPaired, session.hrvBefore != nil || session.hrvAfter != nil {
                         VStack(spacing: 16) {
                             Text("Heart Rate Variability")
                                 .font(.system(.headline, design: .rounded))
@@ -303,8 +305,8 @@ struct SessionDetailSheet: View {
                         .padding(.horizontal, 20)
                     }
 
-                    // Heart rate if available
-                    if let avgHR = session.averageHeartRate {
+                    // Heart rate if available (requires Apple Watch)
+                    if watchManager.isWatchPaired, let avgHR = session.averageHeartRate {
                         VStack(spacing: 12) {
                             HStack {
                                 Image(systemName: "heart.fill")

@@ -157,9 +157,7 @@ struct SettingsView: View {
     }
 
     private var appVersion: String {
-        let version = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0"
-        let build = Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "1"
-        return "\(version) (\(build))"
+        Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "1.0.0"
     }
 }
 
@@ -392,6 +390,7 @@ struct HapticGuideRow: View {
 struct HealthAccessView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var isAuthorized = false
+    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     private let healthKitManager = HealthKitManager.shared
 
@@ -417,7 +416,7 @@ struct HealthAccessView: View {
                         .font(.system(.title2, design: .rounded, weight: .bold))
                         .foregroundColor(Theme.textPrimary)
 
-                    Text("Breathe 478 uses HealthKit to track your HRV and save mindful minutes.")
+                    Text("Breathe 478 uses HealthKit to save mindful minutes\(watchManager.isWatchPaired ? " and track your HRV" : "").")
                         .font(.system(.body, design: .rounded))
                         .foregroundColor(Theme.textSecondary)
                         .multilineTextAlignment(.center)
@@ -426,17 +425,19 @@ struct HealthAccessView: View {
 
                 // Permissions list
                 VStack(alignment: .leading, spacing: 16) {
-                    PermissionRow(
-                        icon: "waveform.path.ecg",
-                        title: "Heart Rate Variability",
-                        description: "Track HRV before and after sessions"
-                    )
+                    if watchManager.isWatchPaired {
+                        PermissionRow(
+                            icon: "waveform.path.ecg",
+                            title: "Heart Rate Variability",
+                            description: "Track HRV before and after sessions"
+                        )
 
-                    PermissionRow(
-                        icon: "heart",
-                        title: "Heart Rate",
-                        description: "Monitor average heart rate during practice"
-                    )
+                        PermissionRow(
+                            icon: "heart",
+                            title: "Heart Rate",
+                            description: "Monitor average heart rate during practice"
+                        )
+                    }
 
                     PermissionRow(
                         icon: "figure.mind.and.body",

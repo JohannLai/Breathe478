@@ -63,35 +63,6 @@ struct CompletionViewiOS: View {
                         label: "Duration",
                         value: viewModel.formattedDuration
                     )
-
-                    if let hrvAfter = viewModel.hrvAfter {
-                        Divider()
-                            .background(Color.white.opacity(0.1))
-
-                        StatRowLarge(
-                            icon: "waveform.path.ecg",
-                            label: "HRV",
-                            value: String(format: "%.0f ms", hrvAfter)
-                        )
-                    }
-
-                    if let improvement = viewModel.hrvImprovement {
-                        Divider()
-                            .background(Color.white.opacity(0.1))
-
-                        HRVImprovementRowLarge(improvement: improvement)
-                    }
-
-                    if let avgHR = viewModel.averageHeartRate {
-                        Divider()
-                            .background(Color.white.opacity(0.1))
-
-                        StatRowLarge(
-                            icon: "heart.fill",
-                            label: "Avg Heart Rate",
-                            value: String(format: "%.0f bpm", avgHR)
-                        )
-                    }
                 }
                 .padding(20)
                 .background(Color.white.opacity(0.08))
@@ -99,18 +70,6 @@ struct CompletionViewiOS: View {
                 .padding(.horizontal, 24)
                 .opacity(contentAppeared ? 1 : 0)
                 .offset(y: contentAppeared ? 0 : 20)
-
-                // Measuring indicator
-                if viewModel.isMeasuringHRV {
-                    HStack(spacing: 8) {
-                        ProgressView()
-                            .tint(Theme.textSecondary)
-                        Text("Measuring HRV...")
-                            .font(.system(.caption, design: .rounded))
-                            .foregroundColor(Theme.textTertiary)
-                    }
-                    .opacity(contentAppeared ? 1 : 0)
-                }
 
                 // Saved indicator
                 if viewModel.sessionSaved {

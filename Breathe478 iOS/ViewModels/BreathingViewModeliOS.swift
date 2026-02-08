@@ -19,11 +19,7 @@ final class BreathingViewModeliOS: ObservableObject {
     // Preparation
     @Published var prepCountdown: Int = 3
 
-    // HRV Tracking
-    @Published var hrvBefore: Double?
-    @Published var hrvAfter: Double?
-    @Published var averageHeartRate: Double?
-    @Published var isMeasuringHRV: Bool = false
+    // Session status
     @Published var sessionSaved: Bool = false
 
     // MARK: - Private Properties
@@ -109,14 +105,6 @@ final class BreathingViewModeliOS: ObservableObject {
         return String(format: "%d:%02d", minutes, seconds)
     }
 
-    /// HRV improvement (if both before/after available)
-    var hrvImprovement: Double? {
-        guard let before = hrvBefore, let after = hrvAfter, before > 0 else {
-            return nil
-        }
-        return ((after - before) / before) * 100
-    }
-
     // MARK: - Session Control
 
     /// Start the session preparation (count in)
@@ -130,9 +118,6 @@ final class BreathingViewModeliOS: ObservableObject {
         currentCycle = 1
         phaseElapsedTime = 0
         sessionStartTime = nil
-        hrvBefore = nil
-        hrvAfter = nil
-        averageHeartRate = nil
         sessionSaved = false
 
         // Start preparation
@@ -157,10 +142,9 @@ final class BreathingViewModeliOS: ObservableObject {
             }
         }
 
-        // Fetch baseline HRV in background
+        // Request HealthKit authorization for saving mindful minutes
         Task {
             await healthKitManager.requestAuthorization()
-            hrvBefore = await healthKitManager.fetchLatestHRV()
         }
     }
 
@@ -230,9 +214,6 @@ final class BreathingViewModeliOS: ObservableObject {
         phaseElapsedTime = 0
         animationScale = 0.2
         sessionStartTime = nil
-        hrvBefore = nil
-        hrvAfter = nil
-        averageHeartRate = nil
         sessionSaved = false
     }
 
@@ -242,24 +223,18 @@ final class BreathingViewModeliOS: ObservableObject {
         guard let startTime = sessionStartTime else { return }
         let endTime = Date()
 
-        // Measure HRV after session
-        isMeasuringHRV = true
-        hrvAfter = await healthKitManager.fetchLatestHRV()
-        averageHeartRate = await healthKitManager.fetchAverageHeartRate(from: startTime, to: endTime)
-        isMeasuringHRV = false
-
         // Save to HealthKit
         let syncedToHealthKit = await healthKitManager.saveMindfulSession(startDate: startTime, endDate: endTime)
 
-        // Save to SwiftData
+        // Save to SwiftData (iPhone sessions never have HRV — HRV requires Apple Watch sensors)
         let record = SessionRecord(
             startDate: startTime,
             endDate: endTime,
             cyclesCompleted: currentCycle,
             duration: endTime.timeIntervalSince(startTime),
-            hrvBefore: hrvBefore,
-            hrvAfter: hrvAfter,
-            averageHeartRate: averageHeartRate,
+            hrvBefore: nil,
+            hrvAfter: nil,
+            averageHeartRate: nil,
             syncedToHealthKit: syncedToHealthKit,
             sourceDevice: "iPhone"
         )

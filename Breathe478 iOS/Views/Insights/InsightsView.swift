@@ -6,6 +6,7 @@ import Charts
 struct InsightsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \SessionRecord.startDate, order: .reverse) private var sessions: [SessionRecord]
+    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     @State private var selectedTimeRange: TimeRange = .week
 
@@ -33,14 +34,16 @@ struct InsightsView: View {
                     // Weekly Summary
                     WeeklySummaryCard(sessions: filteredSessions)
 
-                    // HRV Trend Chart
-                    NavigationLink(destination: HRVDetailView()) {
-                        HRVTrendCard(sessions: filteredSessions, timeRange: selectedTimeRange)
+                    // HRV Trend Chart (requires Apple Watch)
+                    if watchManager.isWatchPaired {
+                        NavigationLink(destination: HRVDetailView()) {
+                            HRVTrendCard(sessions: filteredSessions, timeRange: selectedTimeRange)
+                        }
+                        .buttonStyle(.plain)
                     }
-                    .buttonStyle(.plain)
 
                     // Quick Stats
-                    QuickStatsCard(sessions: sessions)
+                    QuickStatsCard(sessions: sessions, isWatchPaired: watchManager.isWatchPaired)
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -378,6 +381,7 @@ struct SummaryItem: View {
 
 struct QuickStatsCard: View {
     let sessions: [SessionRecord]
+    let isWatchPaired: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -398,17 +402,19 @@ struct QuickStatsCard: View {
                     value: "\(longestStreak) days"
                 )
 
-                QuickStatRow(
-                    icon: "heart.fill",
-                    label: "Best HRV",
-                    value: bestHRV
-                )
+                if isWatchPaired {
+                    QuickStatRow(
+                        icon: "heart.fill",
+                        label: "Best HRV",
+                        value: bestHRV
+                    )
 
-                QuickStatRow(
-                    icon: "arrow.up.right",
-                    label: "Avg HRV Improvement",
-                    value: avgHRVImprovement
-                )
+                    QuickStatRow(
+                        icon: "arrow.up.right",
+                        label: "Avg HRV Improvement",
+                        value: avgHRVImprovement
+                    )
+                }
             }
         }
         .padding(20)
