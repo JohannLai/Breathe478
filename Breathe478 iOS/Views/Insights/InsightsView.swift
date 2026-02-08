@@ -250,10 +250,10 @@ struct HRVTrendCard: View {
                     .interpolationMethod(.catmullRom)
                 }
                 .chartXAxis {
-                    AxisMarks(values: .automatic(desiredCount: 5)) { _ in
+                    AxisMarks(values: .automatic(desiredCount: 4)) { value in
                         AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))
                             .foregroundStyle(Color.white.opacity(0.1))
-                        AxisValueLabel()
+                        AxisValueLabel(format: .dateTime.month(.abbreviated).day())
                             .foregroundStyle(Theme.textTertiary)
                     }
                 }
