@@ -6,7 +6,6 @@ import Charts
 struct InsightsView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \SessionRecord.startDate, order: .reverse) private var sessions: [SessionRecord]
-    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     @State private var selectedTimeRange: TimeRange = .week
 
@@ -34,16 +33,24 @@ struct InsightsView: View {
                     // Weekly Summary
                     WeeklySummaryCard(sessions: filteredSessions)
 
-                    // HRV Trend Chart (requires Apple Watch)
-                    if watchManager.isWatchPaired {
+                    // HRV Trend Chart (show if any sessions have HRV data)
+                    if sessions.contains(where: { $0.hrvAfter != nil }) {
                         NavigationLink(destination: HRVDetailView()) {
                             HRVTrendCard(sessions: filteredSessions, timeRange: selectedTimeRange)
                         }
                         .buttonStyle(.plain)
                     }
 
+                    // Heart Rate Trend Chart (show if any sessions have HR data)
+                    if sessions.contains(where: { $0.averageHeartRate != nil }) {
+                        NavigationLink(destination: HeartRateDetailView()) {
+                            HeartRateTrendCard(sessions: filteredSessions, timeRange: selectedTimeRange)
+                        }
+                        .buttonStyle(.plain)
+                    }
+
                     // Quick Stats
-                    QuickStatsCard(sessions: sessions, isWatchPaired: watchManager.isWatchPaired)
+                    QuickStatsCard(sessions: sessions, hasHRVData: sessions.contains(where: { $0.hrvAfter != nil }))
                 }
                 .padding(.horizontal, 20)
                 .padding(.top, 16)
@@ -293,6 +300,107 @@ struct HRVDataPoint: Identifiable {
     let value: Double
 }
 
+// MARK: - Heart Rate Trend Card
+
+struct HeartRateTrendCard: View {
+    let sessions: [SessionRecord]
+    let timeRange: InsightsView.TimeRange
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Heart Rate Trend")
+                        .font(.system(.headline, design: .rounded))
+                        .foregroundColor(Theme.textPrimary)
+
+                    if let avgHR = averageHeartRate {
+                        Text(String(format: "Avg: %.0f bpm", avgHR))
+                            .font(.system(.subheadline, design: .rounded))
+                            .foregroundColor(Theme.textSecondary)
+                    }
+                }
+
+                Spacer()
+
+                Image(systemName: "chevron.right")
+                    .foregroundColor(Theme.textTertiary)
+            }
+
+            if hrData.isEmpty {
+                VStack(spacing: 8) {
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 28))
+                        .foregroundColor(Theme.textTertiary)
+                    Text("No Heart Rate Data")
+                        .font(.system(.subheadline, design: .rounded, weight: .medium))
+                        .foregroundColor(Theme.textSecondary)
+                    Text("Heart rate is measured during Watch sessions")
+                        .font(.system(.caption, design: .rounded))
+                        .foregroundColor(Theme.textTertiary)
+                }
+                .frame(height: 120)
+                .frame(maxWidth: .infinity)
+            } else {
+                Chart(hrData) { dataPoint in
+                    LineMark(
+                        x: .value("Date", dataPoint.date),
+                        y: .value("HR", dataPoint.value)
+                    )
+                    .foregroundStyle(Color.red.opacity(0.8))
+                    .interpolationMethod(.catmullRom)
+
+                    AreaMark(
+                        x: .value("Date", dataPoint.date),
+                        y: .value("HR", dataPoint.value)
+                    )
+                    .foregroundStyle(
+                        LinearGradient(
+                            colors: [Color.red.opacity(0.3), Color.red.opacity(0.0)],
+                            startPoint: .top,
+                            endPoint: .bottom
+                        )
+                    )
+                    .interpolationMethod(.catmullRom)
+                }
+                .chartXAxis {
+                    AxisMarks(values: .automatic(desiredCount: 4)) { value in
+                        AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))
+                            .foregroundStyle(Color.white.opacity(0.1))
+                        AxisValueLabel(format: .dateTime.month(.abbreviated).day())
+                            .foregroundStyle(Theme.textTertiary)
+                    }
+                }
+                .chartYAxis {
+                    AxisMarks(position: .leading) { _ in
+                        AxisGridLine(stroke: StrokeStyle(lineWidth: 0.5))
+                            .foregroundStyle(Color.white.opacity(0.1))
+                        AxisValueLabel()
+                            .foregroundStyle(Theme.textTertiary)
+                    }
+                }
+                .frame(height: 120)
+            }
+        }
+        .padding(20)
+        .background(Color.white.opacity(0.08))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
+    }
+
+    private var hrData: [HRVDataPoint] {
+        sessions
+            .filter { $0.averageHeartRate != nil }
+            .map { HRVDataPoint(date: $0.startDate, value: $0.averageHeartRate ?? 0) }
+            .sorted { $0.date < $1.date }
+    }
+
+    private var averageHeartRate: Double? {
+        let values = sessions.compactMap { $0.averageHeartRate }
+        guard !values.isEmpty else { return nil }
+        return values.reduce(0, +) / Double(values.count)
+    }
+}
+
 // MARK: - Weekly Summary Card
 
 struct WeeklySummaryCard: View {
@@ -381,7 +489,7 @@ struct SummaryItem: View {
 
 struct QuickStatsCard: View {
     let sessions: [SessionRecord]
-    let isWatchPaired: Bool
+    let hasHRVData: Bool
 
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -402,7 +510,7 @@ struct QuickStatsCard: View {
                     value: "\(longestStreak) days"
                 )
 
-                if isWatchPaired {
+                if hasHRVData {
                     QuickStatRow(
                         icon: "heart.fill",
                         label: "Best HRV",

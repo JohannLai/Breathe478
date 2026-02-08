@@ -112,7 +112,6 @@ struct EmptyHistoryView: View {
 
 struct SessionRowView: View {
     let session: SessionRecord
-    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     var body: some View {
         HStack(spacing: 12) {
@@ -130,17 +129,17 @@ struct SessionRowView: View {
             Spacer()
 
             // Stats
-            HStack(spacing: 16) {
+            HStack(spacing: 8) {
                 // Cycles
                 StatPill(icon: "repeat", value: "\(session.cyclesCompleted)")
 
-                // HRV if available (requires Apple Watch)
-                if watchManager.isWatchPaired, let hrv = session.hrvAfter {
+                // HRV if available
+                if let hrv = session.hrvAfter {
                     StatPill(icon: "waveform.path.ecg", value: String(format: "%.0f", hrv))
                 }
 
-                // Heart rate if available (requires Apple Watch)
-                if watchManager.isWatchPaired, let avgHR = session.averageHeartRate {
+                // Heart rate if available
+                if let avgHR = session.averageHeartRate {
                     StatPill(icon: "heart.fill", value: String(format: "%.0f", avgHR))
                 }
 
@@ -149,6 +148,7 @@ struct SessionRowView: View {
                     .font(.system(size: 14))
                     .foregroundColor(Theme.textTertiary)
             }
+            .fixedSize(horizontal: true, vertical: false)
 
             Image(systemName: "chevron.right")
                 .font(.system(size: 12, weight: .semibold))
@@ -180,6 +180,8 @@ struct StatPill: View {
                 .font(.system(size: 10))
             Text(value)
                 .font(.system(.caption, design: .rounded, weight: .medium))
+                .lineLimit(1)
+                .fixedSize()
         }
         .foregroundColor(Theme.textSecondary)
         .padding(.horizontal, 8)
@@ -194,7 +196,6 @@ struct StatPill: View {
 struct SessionDetailSheet: View {
     let session: SessionRecord
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject private var watchManager = WatchConnectivityManager.shared
 
     var body: some View {
         NavigationStack {
@@ -240,8 +241,8 @@ struct SessionDetailSheet: View {
                     .clipShape(RoundedRectangle(cornerRadius: 16))
                     .padding(.horizontal, 20)
 
-                    // HRV card if available (requires Apple Watch)
-                    if watchManager.isWatchPaired, session.hrvBefore != nil || session.hrvAfter != nil {
+                    // HRV card if available
+                    if session.hrvBefore != nil || session.hrvAfter != nil {
                         VStack(spacing: 16) {
                             Text("Heart Rate Variability")
                                 .font(.system(.headline, design: .rounded))
@@ -310,8 +311,8 @@ struct SessionDetailSheet: View {
                         .padding(.horizontal, 20)
                     }
 
-                    // Heart rate if available (requires Apple Watch)
-                    if watchManager.isWatchPaired, let avgHR = session.averageHeartRate {
+                    // Heart rate if available
+                    if let avgHR = session.averageHeartRate {
                         VStack(spacing: 12) {
                             HStack {
                                 Image(systemName: "heart.fill")

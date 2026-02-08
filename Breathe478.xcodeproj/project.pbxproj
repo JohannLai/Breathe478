@@ -16,6 +16,7 @@
 		2284AD91B8B03D1F4F550AF2 /* BreathingSessionViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E1A118EF2F6C52C2A07B517 /* BreathingSessionViewiOS.swift */; };
 		252E2EAFB7EEA92404F92891 /* CompletionViewiOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15EAAEEF464426BBE1F12436 /* CompletionViewiOS.swift */; };
 		343D8E458DB14855641E38D7 /* BreathingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 107BDFA73C169DA48C48B11E /* BreathingViewModel.swift */; };
+		3CB18ACC98165A4669815BD8 /* HeartRateDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F37943BF8463C0B61DBA00D /* HeartRateDetailView.swift */; };
 		3F6845CB9F07AF39EF38ECDD /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FF1115C9D6AAAE21868E721 /* WatchConnectivityManager.swift */; };
 		42900BA1C97851BA04D67C7C /* CompletionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C45718F2D8FBE8B9E401056E /* CompletionView.swift */; };
 		439F570C0CA9064A97F661E1 /* BreathingFlower.swift in Sources */ = {isa = PBXBuildFile; fileRef = B82BBCF13128F3353F425AD1 /* BreathingFlower.swift */; };
@@ -78,6 +79,7 @@
 		0AD569CFD5AC6B72D66CBED2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0C96952A939EF66D5D3E36F3 /* HapticManageriOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticManageriOS.swift; sourceTree = "<group>"; };
 		0F1EF6222CCB263E4C004FCA /* StartViewiOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewiOS.swift; sourceTree = "<group>"; };
+		0F37943BF8463C0B61DBA00D /* HeartRateDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartRateDetailView.swift; sourceTree = "<group>"; };
 		107BDFA73C169DA48C48B11E /* BreathingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BreathingViewModel.swift; sourceTree = "<group>"; };
 		1379A0BFAB7C4BEFE00DC3EE /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		148E3CFA1D76D7ACD9C256D7 /* StartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartView.swift; sourceTree = "<group>"; };
@@ -222,6 +224,7 @@
 		A8099C255D3059E948BFAD8B /* Insights */ = {
 			isa = PBXGroup;
 			children = (
+				0F37943BF8463C0B61DBA00D /* HeartRateDetailView.swift */,
 				9EA71A7B719C61ED7EF467E1 /* HRVDetailView.swift */,
 				EC9164EB2702A14FF2ED1A22 /* InsightsView.swift */,
 			);
@@ -451,6 +454,7 @@
 				58EBD937A34AEE5B4B1CB0CA /* HRVDetailView.swift in Sources */,
 				AD2AEFAEB0F35681D8D1B851 /* HapticManageriOS.swift in Sources */,
 				C984613E9A7E6D6AA11DF8AC /* HealthKitManager.swift in Sources */,
+				3CB18ACC98165A4669815BD8 /* HeartRateDetailView.swift in Sources */,
 				9FEF2AF8449AC2310D9F6380 /* HistoryView.swift in Sources */,
 				0642E0C4EF2A49946E125A6C /* InsightsView.swift in Sources */,
 				AFDB2E3655E039B1D53BFCD8 /* MainTabView.swift in Sources */,

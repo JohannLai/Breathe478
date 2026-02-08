@@ -13,6 +13,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
 
     private var session: WCSession?
     private var modelContainer: ModelContainer?
+    private var mainModelContext: ModelContext?
 
     override private init() {
         super.init()
@@ -29,6 +30,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     /// Set the ModelContainer so we can save received sessions directly
     func setModelContainer(_ container: ModelContainer) {
         self.modelContainer = container
+        self.mainModelContext = container.mainContext
     }
 
     // MARK: - Public Methods
@@ -87,9 +89,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
         let syncedToHealthKit = sessionData["syncedToHealthKit"] as? Bool ?? false
         let sourceDevice = sessionData["sourceDevice"] as? String ?? "Apple Watch"
 
-        guard let container = modelContainer else { return }
-
-        let context = ModelContext(container)
+        guard let context = mainModelContext else { return }
 
         // Deduplicate: check if a session with the same startDate already exists
         // Use a small time window (1 second) to handle floating point precision
