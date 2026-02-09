@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "title": "4-7-8 呼吸",
+    "download": "下载"
+  },
+  "hero": {
+    "headline1": "呼吸。",
+    "headline2": "感受宁静。",
+    "subtitle": "掌握经科学验证的 4-7-8 呼吸法。精美动画，触觉引导，HRV 追踪。",
+    "platforms": "支持 iPhone 和 Apple Watch。",
+    "downloadOn": "下载于",
+    "appStore": "App Store"
+  },
+  "technique": {
+    "label": "呼吸技巧",
+    "title1": "4-7-8。",
+    "title2": "三个数字，改变一切。",
+    "description": "由 Andrew Weil 博士开发，4-7-8 呼吸法是一种天然的神经系统镇定剂。只需四个循环。",
+    "seconds": "秒",
+    "inhale": "吸气",
+    "inhaleDesc": "用鼻子轻轻吸气",
+    "hold": "屏气",
+    "holdDesc": "轻柔地屏住呼吸",
+    "exhale": "呼气",
+    "exhaleDesc": "用嘴缓慢呼气"
+  },
+  "iphone": {
+    "label": "iPhone",
+    "title1": "你的宁静伙伴。",
+    "title2": "随时相伴。",
+    "feature1Title": "精美视觉",
+    "feature1Desc": "灵动的呼吸花朵动画以流畅的运动和色彩变化引导你的节奏。",
+    "feature2Title": "触觉引导",
+    "feature2Desc": "细腻的振动标记每个阶段，闭上眼睛，感受节奏。",
+    "feature3Title": "完整记录",
+    "feature3Desc": "追踪每次练习，查看趋势，通过连续记录和洞察建立日常习惯。"
+  },
+  "watch": {
+    "label": "Apple Watch",
+    "title1": "在你的手腕上。",
+    "title2": "在此刻。",
+    "description": "完全独立的 watchOS 应用。从手腕开始练习，精美动画，精准触觉反馈。",
+    "tag1": "随时练习",
+    "tag2": "触觉指导",
+    "tag3": "记录追踪",
+    "tag4": "HRV 监测"
+  },
+  "health": {
+    "label": "健康",
+    "title1": "科学支撑的洞察。",
+    "title2": "由 HealthKit 驱动。",
+    "card1Title": "心率变异性",
+    "card1Desc": "追踪每次练习前后的 HRV。了解呼吸练习如何改善你的自主神经系统。",
+    "card2Title": "心率",
+    "card2Desc": "练习时实时监测心率。观察你的身体如何随着有节奏的呼吸作出反应。",
+    "card3Title": "正念分钟数",
+    "card3Desc": "每次练习自动保存到 Apple 健康作为正念分钟数。你的练习计入每日目标。"
+  },
+  "benefits": {
+    "title": "为什么选择 4-7-8？",
+    "b1Title": "缓解焦虑",
+    "b1Desc": "在不到 2 分钟内激活副交感神经系统。",
+    "b2Title": "改善睡眠",
+    "b2Desc": "作为睡前仪式，平息纷繁的思绪。",
+    "b3Title": "降低压力",
+    "b3Desc": "有控制的呼吸能自然降低皮质醇水平。",
+    "b4Title": "提升专注",
+    "b4Desc": "通过短暂的呼吸休息重置注意力。",
+    "b5Title": "建立习惯",
+    "b5Desc": "连续记录、历史数据和洞察让你保持动力。",
+    "b6Title": "隐私至上",
+    "b6Desc": "所有数据留在你的设备上。无需账户，无追踪。"
+  },
+  "privacy": {
+    "sectionTitle": "你的隐私至关重要。",
+    "sectionDesc": "4-7-8 呼吸在设备上处理一切。无需账户，无需云端，无追踪。你的健康数据永远不会离开你的 iPhone 或 Apple Watch。"
+  },
+  "cta": {
+    "title1": "开始呼吸。",
+    "title2": "开始感受。",
+    "subtitle": "免费下载。支持 iPhone 和 Apple Watch。",
+    "button": "在 App Store 下载"
+  },
+  "footer": {
+    "copyright": "4-7-8 呼吸。保留所有权利。",
+    "support": "支持",
+    "privacyPolicy": "隐私政策"
+  },
+  "privacyPage": {
+    "back": "返回",
+    "title": "隐私政策",
+    "lastUpdated": "最后更新：2026 年 2 月 8 日",
+    "overviewTitle": "概述",
+    "overviewText": "4-7-8 呼吸（「本应用」）将您的隐私视为最高优先。我们不收集、存储或传输任何个人数据。一切都保留在您的设备上。",
+    "dataCollectionTitle": "数据收集",
+    "dataCollectionText": "本应用<strong>不</strong>收集任何个人信息。具体来说：",
+    "dataCollectionItems": [
+      "无需创建账户或登录",
+      "无分析或跟踪 SDK",
+      "无广告标识符",
+      "无崩溃报告发送至外部服务器",
+      "不与第三方共享数据"
+    ],
+    "healthDataTitle": "健康数据",
+    "healthDataText": "本应用与 Apple HealthKit 集成，读取心率变异性（HRV）和心率数据，并写入正念分钟数。这些数据：",
+    "healthDataItems": [
+      "仅在您明确授权后访问",
+      "完全在您的设备上处理",
+      "从不传输到任何服务器",
+      "从不与任何第三方共享"
+    ],
+    "healthDataFooter": "所有健康数据均由 Apple 的 HealthKit 框架管理，并受 Apple 隐私政策的约束。",
+    "storageTitle": "本地存储",
+    "storageText": "您的呼吸练习历史和偏好使用 SwiftData 存储在您的 iPhone 和 Apple Watch 本地。我们或任何第三方均无法访问这些数据。",
+    "networkTitle": "网络使用",
+    "networkText": "本应用不发出任何网络请求。完全离线运行。",
+    "childrenTitle": "儿童隐私",
+    "childrenText": "本应用不收集任何人的数据，包括 13 岁以下的儿童。",
+    "changesTitle": "政策变更",
+    "changesText": "我们可能会不时更新本隐私政策。任何变更都将在此页面上反映，并更新修订日期。",
+    "contactTitle": "联系我们",
+    "contactText": "如果您对本隐私政策有任何疑问，请联系我们："
+  }
+}

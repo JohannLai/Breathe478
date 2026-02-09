@@ -25,8 +25,9 @@
   body {
     background: var(--background);
     color: var(--foreground);
-    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
-      "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+    font-family:
+      -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text",
+      "Helvetica Neue", Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
@@ -36,12 +37,7 @@
 @layer components {
   /* Apple-style gradient text */
   .gradient-text {
-    background: linear-gradient(
-      135deg,
-      #59c9c2 0%,
-      #64d1ff 50%,
-      #4fb596 100%
-    );
+    background: linear-gradient(135deg, #59c9c2 0%, #64d1ff 50%, #4fb596 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -56,7 +52,8 @@
 
   /* Glow effects */
   .glow-teal {
-    box-shadow: 0 0 60px rgba(89, 201, 194, 0.15),
+    box-shadow:
+      0 0 60px rgba(89, 201, 194, 0.15),
       0 0 120px rgba(89, 201, 194, 0.05);
   }
 
@@ -72,8 +69,10 @@
     position: relative;
     border-radius: 40px;
     overflow: hidden;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1),
-      0 25px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(89, 201, 194, 0.08);
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.1),
+      0 25px 80px rgba(0, 0, 0, 0.6),
+      0 0 60px rgba(89, 201, 194, 0.08);
   }
 
   /* Watch frame */
@@ -81,8 +80,10 @@
     position: relative;
     border-radius: 28px;
     overflow: hidden;
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.12),
-      0 15px 50px rgba(0, 0, 0, 0.5), 0 0 40px rgba(89, 201, 194, 0.06);
+    box-shadow:
+      0 0 0 2px rgba(255, 255, 255, 0.12),
+      0 15px 50px rgba(0, 0, 0, 0.5),
+      0 0 40px rgba(89, 201, 194, 0.06);
   }
 
   /* Section divider */
@@ -107,7 +108,9 @@
   .reveal {
     opacity: 0;
     transform: translateY(30px);
-    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    transition:
+      opacity 0.8s ease-out,
+      transform 0.8s ease-out;
   }
 
   .reveal.visible {
@@ -134,14 +137,30 @@
     animation: floatUp 6s ease-in-out infinite;
   }
 
-  .delay-100 { animation-delay: 0.1s; }
-  .delay-200 { animation-delay: 0.2s; }
-  .delay-300 { animation-delay: 0.3s; }
-  .delay-400 { animation-delay: 0.4s; }
-  .delay-500 { animation-delay: 0.5s; }
-  .delay-600 { animation-delay: 0.6s; }
-  .delay-700 { animation-delay: 0.7s; }
-  .delay-800 { animation-delay: 0.8s; }
+  .delay-100 {
+    animation-delay: 0.1s;
+  }
+  .delay-200 {
+    animation-delay: 0.2s;
+  }
+  .delay-300 {
+    animation-delay: 0.3s;
+  }
+  .delay-400 {
+    animation-delay: 0.4s;
+  }
+  .delay-500 {
+    animation-delay: 0.5s;
+  }
+  .delay-600 {
+    animation-delay: 0.6s;
+  }
+  .delay-700 {
+    animation-delay: 0.7s;
+  }
+  .delay-800 {
+    animation-delay: 0.8s;
+  }
 }
 
 /* Keyframes (outside layers - they're global) */
@@ -157,12 +176,17 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes breathePulse {
-  0%, 100% {
+  0%,
+  100% {
     transform: scale(0.85);
     opacity: 0.6;
   }
@@ -176,7 +200,45 @@
   }
 }
 
+/* Breathing flower — matches iOS PetalView.swift */
+@keyframes flowerRotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Petals expand/contract + color shift in 19s cycle (4+7+8) */
+@keyframes petalBreath {
+  0% {
+    left: 0px;
+    background-color: rgba(89, 201, 194, 0.7);
+  }
+  21% {
+    left: 45px;
+    background-color: rgba(80, 180, 150, 0.7);
+  }
+  58% {
+    left: 45px;
+    background-color: rgba(80, 180, 150, 0.7);
+  }
+  59% {
+    background-color: rgba(100, 210, 255, 0.7);
+  }
+  100% {
+    left: 0px;
+    background-color: rgba(89, 201, 194, 0.7);
+  }
+}
+
 @keyframes floatUp {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }

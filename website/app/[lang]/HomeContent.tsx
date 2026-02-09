@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import type { Dictionary } from "../../i18n/getDictionary";
 
 /* ─── Scroll Reveal Hook ─── */
 function useReveal() {
@@ -40,7 +41,7 @@ function RevealSection({
 }
 
 /* ─── Nav ─── */
-function Nav() {
+function Nav({ t, lang }: { t: Dictionary; lang: string }) {
   const [scrolled, setScrolled] = useState(false);
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 20);
@@ -56,21 +57,53 @@ function Nav() {
     >
       <div className="max-w-[980px] mx-auto px-6 h-12 flex items-center justify-between">
         <span className="text-sm font-medium text-[var(--foreground)] tracking-tight">
-          4-7-8 Breathe
+          {t.nav.title}
         </span>
-        <a
-          href="#download"
-          className="text-xs text-[var(--accent-teal)] hover:text-[var(--accent-blue)] transition-colors"
-        >
-          Download
-        </a>
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher lang={lang} />
+          <a
+            href="#download"
+            className="text-xs text-[var(--accent-teal)] hover:text-[var(--accent-blue)] transition-colors"
+          >
+            {t.nav.download}
+          </a>
+        </div>
       </div>
     </nav>
   );
 }
 
+/* ─── Language Switcher ─── */
+function LanguageSwitcher({ lang }: { lang: string }) {
+  const languages = [
+    { code: "en", label: "EN" },
+    { code: "zh-CN", label: "简" },
+    { code: "zh-TW", label: "繁" },
+  ];
+
+  return (
+    <div className="flex items-center gap-1 text-xs">
+      {languages.map((l, i) => (
+        <span key={l.code} className="flex items-center gap-1">
+          {i > 0 && <span className="text-[var(--text-tertiary)]">/</span>}
+          {l.code === lang ? (
+            <span className="text-[var(--foreground)] font-medium">{l.label}</span>
+          ) : (
+            <a
+              href={`/${l.code}`}
+              className="text-[var(--text-tertiary)] hover:text-[var(--foreground)] transition-colors"
+            >
+              {l.label}
+            </a>
+          )}
+        </span>
+      ))}
+    </div>
+  );
+}
+
 /* ─── Hero ─── */
-function Hero() {
+function Hero({ t }: { t: Dictionary }) {
   return (
     <section className="relative min-h-screen flex flex-col items-center justify-center text-center px-6 overflow-hidden">
       {/* Background glow */}
@@ -87,34 +120,56 @@ function Hero() {
         }}
       />
 
-      {/* Breathing circle */}
-      <div className="relative mb-12 animate-fade-in">
-        <div className="animate-breathe">
-          <div
-            className="w-32 h-32 rounded-full"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(89,201,194,0.6) 0%, rgba(100,209,255,0.3) 50%, transparent 70%)",
-              boxShadow: "0 0 80px rgba(89,201,194,0.3)",
-            }}
-          />
+      {/* Breathing flower — 6 petals matching iOS PetalView */}
+      <div className="relative mb-12 animate-fade-in" style={{ width: 240, height: 240 }}>
+        {/* Glow behind flower */}
+        <div
+          className="absolute inset-0 rounded-full animate-breathe"
+          style={{
+            background: "radial-gradient(circle, rgba(89,201,194,0.25) 0%, transparent 70%)",
+            filter: "blur(20px)",
+          }}
+        />
+        <div
+          className="relative w-full h-full"
+          style={{ animation: "flowerRotate 60s linear infinite" }}
+        >
+          {[0, 60, 120, 180, 240, 300].map((deg) => (
+            <div
+              key={deg}
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ transform: `rotate(${deg}deg)` }}
+            >
+              <div
+                className="rounded-full"
+                style={{
+                  width: 100,
+                  height: 100,
+                  position: "relative",
+                  left: 0,
+                  backgroundColor: "rgba(89, 201, 194, 0.7)",
+                  mixBlendMode: "plus-lighter",
+                  animation: "petalBreath 19s cubic-bezier(0.42,0,0.58,1) infinite",
+                }}
+              />
+            </div>
+          ))}
         </div>
       </div>
 
       {/* Headline */}
       <h1 className="text-5xl sm:text-7xl font-semibold tracking-tight leading-tight animate-fade-in-up">
-        Breathe.
+        {t.hero.headline1}
         <br />
-        <span className="gradient-text">Feel calm.</span>
+        <span className="gradient-text">{t.hero.headline2}</span>
       </h1>
 
       <p className="mt-6 text-lg sm:text-xl text-[var(--text-secondary)] max-w-lg animate-fade-in-up delay-200">
-        Master the scientifically-backed 4-7-8 breathing technique. Beautiful
-        animations. Haptic guidance. HRV tracking.
+        {t.hero.subtitle}
       </p>
 
       <p className="mt-2 text-sm text-[var(--text-tertiary)] animate-fade-in-up delay-300">
-        Available on iPhone and Apple Watch.
+        {t.hero.platforms}
       </p>
 
       {/* App Store badge */}
@@ -129,9 +184,9 @@ function Hero() {
           </svg>
           <div className="text-left">
             <div className="text-[10px] text-[var(--text-secondary)] leading-none">
-              Download on the
+              {t.hero.downloadOn}
             </div>
-            <div className="text-base font-medium leading-tight">App Store</div>
+            <div className="text-base font-medium leading-tight">{t.hero.appStore}</div>
           </div>
         </a>
       </div>
@@ -152,25 +207,25 @@ function Hero() {
 }
 
 /* ─── Technique Section ─── */
-function TechniqueSection() {
+function TechniqueSection({ t }: { t: Dictionary }) {
   const phases = [
     {
-      label: "Inhale",
+      label: t.technique.inhale,
       seconds: 4,
       color: "#59c9c2",
-      description: "Breathe in quietly through your nose",
+      description: t.technique.inhaleDesc,
     },
     {
-      label: "Hold",
+      label: t.technique.hold,
       seconds: 7,
       color: "#4fb596",
-      description: "Hold your breath gently",
+      description: t.technique.holdDesc,
     },
     {
-      label: "Exhale",
+      label: t.technique.exhale,
       seconds: 8,
       color: "#64d1ff",
-      description: "Exhale slowly through your mouth",
+      description: t.technique.exhaleDesc,
     },
   ];
 
@@ -179,23 +234,21 @@ function TechniqueSection() {
       <div className="max-w-[980px] mx-auto">
         <RevealSection className="text-center mb-20">
           <p className="text-sm font-medium text-[var(--accent-teal)] tracking-widest uppercase mb-4">
-            The Technique
+            {t.technique.label}
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            4-7-8.{" "}
+            {t.technique.title1}{" "}
             <span className="text-[var(--text-secondary)]">
-              Three numbers that change everything.
+              {t.technique.title2}
             </span>
           </h2>
           <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            Developed by Dr. Andrew Weil, the 4-7-8 breathing technique is a
-            natural tranquilizer for the nervous system. Four cycles is all it
-            takes.
+            {t.technique.description}
           </p>
         </RevealSection>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {phases.map((phase, i) => (
+          {phases.map((phase) => (
             <RevealSection key={phase.label}>
               <div
                 className="rounded-2xl p-8 text-center"
@@ -211,7 +264,7 @@ function TechniqueSection() {
                   {phase.seconds}
                 </div>
                 <div className="text-xs tracking-widest uppercase text-[var(--text-secondary)] mb-2">
-                  seconds
+                  {t.technique.seconds}
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{phase.label}</h3>
                 <p className="text-sm text-[var(--text-tertiary)]">
@@ -227,20 +280,11 @@ function TechniqueSection() {
 }
 
 /* ─── iPhone Section ─── */
-function IPhoneSection() {
+function IPhoneSection({ t }: { t: Dictionary }) {
   const features = [
-    {
-      title: "Stunning Visuals",
-      desc: "A living, breathing flower animation guides your rhythm with fluid motion and color transitions.",
-    },
-    {
-      title: "Haptic Guidance",
-      desc: "Subtle vibrations mark each phase so you can close your eyes and simply feel the rhythm.",
-    },
-    {
-      title: "Complete History",
-      desc: "Track every session. View trends. Build a daily practice with streaks and insights.",
-    },
+    { title: t.iphone.feature1Title, desc: t.iphone.feature1Desc },
+    { title: t.iphone.feature2Title, desc: t.iphone.feature2Desc },
+    { title: t.iphone.feature3Title, desc: t.iphone.feature3Desc },
   ];
 
   return (
@@ -248,12 +292,12 @@ function IPhoneSection() {
       <div className="max-w-[1200px] mx-auto">
         <RevealSection className="text-center mb-20">
           <p className="text-sm font-medium text-[var(--accent-teal)] tracking-widest uppercase mb-4">
-            iPhone
+            {t.iphone.label}
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            Your calm companion.{" "}
+            {t.iphone.title1}{" "}
             <span className="text-[var(--text-secondary)]">
-              Always with you.
+              {t.iphone.title2}
             </span>
           </h2>
         </RevealSection>
@@ -300,34 +344,28 @@ function IPhoneSection() {
 }
 
 /* ─── Watch Section ─── */
-function WatchSection() {
-  const labels = [
-    "Practice anywhere",
-    "Haptic coaching",
-    "Session tracking",
-    "HRV monitoring",
-  ];
+function WatchSection({ t }: { t: Dictionary }) {
+  const labels = [t.watch.tag1, t.watch.tag2, t.watch.tag3, t.watch.tag4];
 
   return (
     <section className="py-32 px-6">
       <div className="max-w-[980px] mx-auto">
         <RevealSection className="text-center mb-20">
           <p className="text-sm font-medium text-[var(--accent-blue)] tracking-widest uppercase mb-4">
-            Apple Watch
+            {t.watch.label}
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            On your wrist.{" "}
-            <span className="text-[var(--text-secondary)]">In the moment.</span>
+            {t.watch.title1}{" "}
+            <span className="text-[var(--text-secondary)]">{t.watch.title2}</span>
           </h2>
           <p className="mt-6 text-lg text-[var(--text-secondary)] max-w-2xl mx-auto">
-            A fully independent watchOS app. Start a session right from your
-            wrist with beautiful animations and precise haptic feedback.
+            {t.watch.description}
           </p>
         </RevealSection>
 
         <RevealSection>
           <div className="flex gap-6 justify-center items-center mb-16 flex-wrap">
-            {[1, 2, 3, 4].map((n, i) => (
+            {[1, 2, 3, 4].map((n) => (
               <div
                 key={n}
                 className="watch-frame w-[140px] sm:w-[170px] flex-shrink-0"
@@ -366,24 +404,24 @@ function WatchSection() {
 }
 
 /* ─── Health Section ─── */
-function HealthSection() {
+function HealthSection({ t }: { t: Dictionary }) {
   const cards = [
     {
       icon: "♥",
-      title: "Heart Rate Variability",
-      desc: "Track your HRV before and after each session. See how breathing exercises improve your autonomic nervous system over time.",
+      title: t.health.card1Title,
+      desc: t.health.card1Desc,
       color: "#59c9c2",
     },
     {
       icon: "♡",
-      title: "Heart Rate",
-      desc: "Monitor real-time heart rate during sessions. Watch your body respond as you breathe with rhythm and intention.",
+      title: t.health.card2Title,
+      desc: t.health.card2Desc,
       color: "#4fb596",
     },
     {
       icon: "◎",
-      title: "Mindful Minutes",
-      desc: "Every session automatically saves to Apple Health as mindful minutes. Your practice counts toward your daily goals.",
+      title: t.health.card3Title,
+      desc: t.health.card3Desc,
       color: "#64d1ff",
     },
   ];
@@ -393,12 +431,12 @@ function HealthSection() {
       <div className="max-w-[980px] mx-auto">
         <RevealSection className="text-center mb-20">
           <p className="text-sm font-medium text-[var(--accent-green)] tracking-widest uppercase mb-4">
-            Health
+            {t.health.label}
           </p>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            Science-backed insights.{" "}
+            {t.health.title1}{" "}
             <span className="text-[var(--text-secondary)]">
-              Powered by HealthKit.
+              {t.health.title2}
             </span>
           </h2>
         </RevealSection>
@@ -430,32 +468,14 @@ function HealthSection() {
 }
 
 /* ─── Benefits Section ─── */
-function BenefitsSection() {
+function BenefitsSection({ t }: { t: Dictionary }) {
   const benefits = [
-    {
-      title: "Reduce Anxiety",
-      desc: "Activate your parasympathetic nervous system in under 2 minutes.",
-    },
-    {
-      title: "Sleep Better",
-      desc: "Use as a pre-sleep routine to quiet racing thoughts.",
-    },
-    {
-      title: "Lower Stress",
-      desc: "Controlled breathing lowers cortisol levels naturally.",
-    },
-    {
-      title: "Improve Focus",
-      desc: "Reset your attention with a brief breathing break.",
-    },
-    {
-      title: "Build Consistency",
-      desc: "Streaks, history, and insights keep you motivated.",
-    },
-    {
-      title: "Stay Private",
-      desc: "All data stays on your device. No accounts. No tracking.",
-    },
+    { title: t.benefits.b1Title, desc: t.benefits.b1Desc },
+    { title: t.benefits.b2Title, desc: t.benefits.b2Desc },
+    { title: t.benefits.b3Title, desc: t.benefits.b3Desc },
+    { title: t.benefits.b4Title, desc: t.benefits.b4Desc },
+    { title: t.benefits.b5Title, desc: t.benefits.b5Desc },
+    { title: t.benefits.b6Title, desc: t.benefits.b6Desc },
   ];
 
   return (
@@ -463,7 +483,7 @@ function BenefitsSection() {
       <div className="max-w-[980px] mx-auto">
         <RevealSection className="text-center mb-20">
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight">
-            Why 4-7-8?
+            {t.benefits.title}
           </h2>
         </RevealSection>
 
@@ -485,7 +505,7 @@ function BenefitsSection() {
 }
 
 /* ─── Privacy Section ─── */
-function PrivacySection() {
+function PrivacySection({ t }: { t: Dictionary }) {
   return (
     <section className="py-32 px-6">
       <div className="max-w-[600px] mx-auto text-center">
@@ -499,12 +519,10 @@ function PrivacySection() {
           >
             <div className="text-4xl mb-6">🔒</div>
             <h2 className="text-2xl font-semibold mb-4">
-              Your privacy is everything.
+              {t.privacy.sectionTitle}
             </h2>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed">
-              4-7-8 Breathe processes everything on-device. No accounts. No
-              cloud. No tracking. Your health data never leaves your iPhone or
-              Apple Watch.
+              {t.privacy.sectionDesc}
             </p>
           </div>
         </RevealSection>
@@ -514,18 +532,18 @@ function PrivacySection() {
 }
 
 /* ─── CTA Section ─── */
-function CTASection() {
+function CTASection({ t }: { t: Dictionary }) {
   return (
     <section id="download" className="py-32 px-6">
       <div className="max-w-[600px] mx-auto text-center">
         <RevealSection>
           <h2 className="text-4xl sm:text-5xl font-semibold tracking-tight mb-6">
-            Start breathing.
+            {t.cta.title1}
             <br />
-            <span className="gradient-text">Start feeling.</span>
+            <span className="gradient-text">{t.cta.title2}</span>
           </h2>
           <p className="text-lg text-[var(--text-secondary)] mb-10">
-            Free to download. Available on iPhone and Apple Watch.
+            {t.cta.subtitle}
           </p>
           <a
             href="https://apps.apple.com/app/id6758927414"
@@ -535,7 +553,7 @@ function CTASection() {
               <path d="M13.545 10.239c-.022-2.234 1.823-3.306 1.905-3.358-.037-.053-1.497-2.162-3.833-2.162-1.63 0-2.958.964-3.74.964-.807 0-2.023-.94-3.333-.914C2.37 4.797.5 6.277.5 9.94c0 2.208.847 4.534 1.905 6.04 1.042 1.474 1.948 2.805 3.39 2.752 1.356-.054 1.872-.87 3.516-.87 1.62 0 2.088.87 3.516.843 1.473-.027 2.26-1.382 3.275-2.87.554-.796.979-1.696 1.298-2.647-2.67-1.025-3.855-4.95-3.855-4.95z" />
               <path d="M11.173 3.267c.8-.993 1.348-2.353 1.195-3.767-1.155.053-2.575.795-3.4 1.767-.74.87-1.4 2.285-1.225 3.617 1.295.1 2.63-.66 3.43-1.617z" />
             </svg>
-            Download on the App Store
+            {t.cta.button}
           </a>
         </RevealSection>
       </div>
@@ -544,25 +562,25 @@ function CTASection() {
 }
 
 /* ─── Footer ─── */
-function Footer() {
+function Footer({ t, lang }: { t: Dictionary; lang: string }) {
   return (
     <footer className="py-8 px-6 border-t border-white/[0.06]">
       <div className="max-w-[980px] mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--text-tertiary)]">
         <span>
-          &copy; {new Date().getFullYear()} 4-7-8 Breathe. All rights reserved.
+          &copy; {new Date().getFullYear()} {t.footer.copyright}
         </span>
         <div className="flex gap-6">
           <a
             href="mailto:lizhihang.com@gmail.com"
             className="hover:text-[var(--foreground)] transition-colors"
           >
-            Support
+            {t.footer.support}
           </a>
           <a
-            href="/privacy"
+            href={`/${lang}/privacy`}
             className="hover:text-[var(--foreground)] transition-colors"
           >
-            Privacy Policy
+            {t.footer.privacyPolicy}
           </a>
         </div>
       </div>
@@ -570,28 +588,28 @@ function Footer() {
   );
 }
 
-/* ─── Page ─── */
-export default function Home() {
+/* ─── Page Content (Client Component) ─── */
+export default function HomeContent({ t, lang }: { t: Dictionary; lang: string }) {
   return (
     <>
-      <Nav />
+      <Nav t={t} lang={lang} />
       <main>
-        <Hero />
+        <Hero t={t} />
         <div className="section-divider" />
-        <TechniqueSection />
+        <TechniqueSection t={t} />
         <div className="section-divider" />
-        <IPhoneSection />
+        <IPhoneSection t={t} />
         <div className="section-divider" />
-        <WatchSection />
+        <WatchSection t={t} />
         <div className="section-divider" />
-        <HealthSection />
+        <HealthSection t={t} />
         <div className="section-divider" />
-        <BenefitsSection />
+        <BenefitsSection t={t} />
         <div className="section-divider" />
-        <PrivacySection />
-        <CTASection />
+        <PrivacySection t={t} />
+        <CTASection t={t} />
       </main>
-      <Footer />
+      <Footer t={t} lang={lang} />
     </>
   );
 }

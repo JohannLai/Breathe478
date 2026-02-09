@@ -1,0 +1,124 @@
+{
+  "nav": {
+    "title": "4-7-8 Breathe",
+    "download": "Download"
+  },
+  "hero": {
+    "headline1": "Breathe.",
+    "headline2": "Feel calm.",
+    "subtitle": "Master the scientifically-backed 4-7-8 breathing technique. Beautiful animations. Haptic guidance. HRV tracking.",
+    "platforms": "Available on iPhone and Apple Watch.",
+    "downloadOn": "Download on the",
+    "appStore": "App Store"
+  },
+  "technique": {
+    "label": "The Technique",
+    "title1": "4-7-8.",
+    "title2": "Three numbers that change everything.",
+    "description": "Developed by Dr. Andrew Weil, the 4-7-8 breathing technique is a natural tranquilizer for the nervous system. Four cycles is all it takes.",
+    "seconds": "seconds",
+    "inhale": "Inhale",
+    "inhaleDesc": "Breathe in quietly through your nose",
+    "hold": "Hold",
+    "holdDesc": "Hold your breath gently",
+    "exhale": "Exhale",
+    "exhaleDesc": "Exhale slowly through your mouth"
+  },
+  "iphone": {
+    "label": "iPhone",
+    "title1": "Your calm companion.",
+    "title2": "Always with you.",
+    "feature1Title": "Stunning Visuals",
+    "feature1Desc": "A living, breathing flower animation guides your rhythm with fluid motion and color transitions.",
+    "feature2Title": "Haptic Guidance",
+    "feature2Desc": "Subtle vibrations mark each phase so you can close your eyes and simply feel the rhythm.",
+    "feature3Title": "Complete History",
+    "feature3Desc": "Track every session. View trends. Build a daily practice with streaks and insights."
+  },
+  "watch": {
+    "label": "Apple Watch",
+    "title1": "On your wrist.",
+    "title2": "In the moment.",
+    "description": "A fully independent watchOS app. Start a session right from your wrist with beautiful animations and precise haptic feedback.",
+    "tag1": "Practice anywhere",
+    "tag2": "Haptic coaching",
+    "tag3": "Session tracking",
+    "tag4": "HRV monitoring"
+  },
+  "health": {
+    "label": "Health",
+    "title1": "Science-backed insights.",
+    "title2": "Powered by HealthKit.",
+    "card1Title": "Heart Rate Variability",
+    "card1Desc": "Track your HRV before and after each session. See how breathing exercises improve your autonomic nervous system over time.",
+    "card2Title": "Heart Rate",
+    "card2Desc": "Monitor real-time heart rate during sessions. Watch your body respond as you breathe with rhythm and intention.",
+    "card3Title": "Mindful Minutes",
+    "card3Desc": "Every session automatically saves to Apple Health as mindful minutes. Your practice counts toward your daily goals."
+  },
+  "benefits": {
+    "title": "Why 4-7-8?",
+    "b1Title": "Reduce Anxiety",
+    "b1Desc": "Activate your parasympathetic nervous system in under 2 minutes.",
+    "b2Title": "Sleep Better",
+    "b2Desc": "Use as a pre-sleep routine to quiet racing thoughts.",
+    "b3Title": "Lower Stress",
+    "b3Desc": "Controlled breathing lowers cortisol levels naturally.",
+    "b4Title": "Improve Focus",
+    "b4Desc": "Reset your attention with a brief breathing break.",
+    "b5Title": "Build Consistency",
+    "b5Desc": "Streaks, history, and insights keep you motivated.",
+    "b6Title": "Stay Private",
+    "b6Desc": "All data stays on your device. No accounts. No tracking."
+  },
+  "privacy": {
+    "sectionTitle": "Your privacy is everything.",
+    "sectionDesc": "4-7-8 Breathe processes everything on-device. No accounts. No cloud. No tracking. Your health data never leaves your iPhone or Apple Watch."
+  },
+  "cta": {
+    "title1": "Start breathing.",
+    "title2": "Start feeling.",
+    "subtitle": "Free to download. Available on iPhone and Apple Watch.",
+    "button": "Download on the App Store"
+  },
+  "footer": {
+    "copyright": "4-7-8 Breathe. All rights reserved.",
+    "support": "Support",
+    "privacyPolicy": "Privacy Policy"
+  },
+  "privacyPage": {
+    "back": "Back",
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: February 8, 2026",
+    "overviewTitle": "Overview",
+    "overviewText": "4-7-8 Breathe (\"the App\") is designed with your privacy as a top priority. We do not collect, store, or transmit any personal data. Everything stays on your device.",
+    "dataCollectionTitle": "Data Collection",
+    "dataCollectionText": "The App does <strong>not</strong> collect any personal information. Specifically:",
+    "dataCollectionItems": [
+      "No account creation or sign-in required",
+      "No analytics or tracking SDKs",
+      "No advertising identifiers",
+      "No crash reporting to external servers",
+      "No data shared with third parties"
+    ],
+    "healthDataTitle": "Health Data",
+    "healthDataText": "The App integrates with Apple HealthKit to read heart rate variability (HRV) and heart rate data, and to write mindful minutes. This data is:",
+    "healthDataItems": [
+      "Accessed only with your explicit permission",
+      "Processed entirely on your device",
+      "Never transmitted to any server",
+      "Never shared with any third party"
+    ],
+    "healthDataFooter": "All health data is managed by Apple's HealthKit framework and subject to Apple's privacy policies.",
+    "storageTitle": "On-Device Storage",
+    "storageText": "Your breathing session history and preferences are stored locally on your iPhone and Apple Watch using SwiftData. This data is not accessible to us or any third party.",
+    "networkTitle": "Network Usage",
+    "networkText": "The App does not make any network requests. It works entirely offline.",
+    "childrenTitle": "Children's Privacy",
+    "childrenText": "The App does not collect any data from anyone, including children under the age of 13.",
+    "changesTitle": "Changes to This Policy",
+    "changesText": "We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated revision date.",
+    "contactTitle": "Contact",
+    "contactText": "If you have any questions about this Privacy Policy, please contact us at"
+  }
+}
