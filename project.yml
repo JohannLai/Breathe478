@@ -11,6 +11,7 @@ settings:
   base:
     SWIFT_VERSION: "5.9"
     DEVELOPMENT_TEAM: "8BDAZ8X68U"
+    CODE_SIGN_STYLE: Automatic
 
 targets:
   # Shared framework (optional, but helps with code organization)
@@ -41,6 +42,7 @@ targets:
         CURRENT_PROJECT_VERSION: "1"
         SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
         TARGETED_DEVICE_FAMILY: "1,2"
+        CODE_SIGN_IDENTITY: "Apple Development"
     dependencies:
       - target: Breathe478 Watch App
         embed: watch2
@@ -82,8 +84,7 @@ targets:
         SWIFT_EMIT_LOC_STRINGS: YES
         MARKETING_VERSION: "1.0.0"
         CURRENT_PROJECT_VERSION: "1"
-        SKIP_INSTALL: NO
-        INSTALL_PATH: "$(LOCAL_APPS_DIR)"
+        SKIP_INSTALL: YES
     entitlements:
       path: Breathe478 Watch App/Breathe478.entitlements
       properties:

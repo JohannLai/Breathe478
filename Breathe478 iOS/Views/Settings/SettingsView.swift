@@ -8,6 +8,7 @@ struct SettingsView: View {
 
     @State private var showingAbout = false
     @State private var showingHealthAccess = false
+    @State private var showingDisclaimer = false
 
     var body: some View {
         NavigationStack {
@@ -127,6 +128,19 @@ struct SettingsView: View {
                         }
                     }
 
+                    Button(action: { showingDisclaimer = true }) {
+                        HStack {
+                            Label("Disclaimer", systemImage: "exclamationmark.shield")
+                                .foregroundColor(Theme.textPrimary)
+
+                            Spacer()
+
+                            Image(systemName: "chevron.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(Theme.textTertiary)
+                        }
+                    }
+
                     HStack {
                         Label("Version", systemImage: "number")
                             .foregroundColor(Theme.textPrimary)
@@ -152,6 +166,9 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showingHealthAccess) {
                 HealthAccessView()
+            }
+            .sheet(isPresented: $showingDisclaimer) {
+                DisclaimerView()
             }
         }
     }
@@ -382,6 +399,108 @@ struct HapticGuideRow: View {
             }
         }
         .contentShape(Rectangle())
+    }
+}
+
+// MARK: - Disclaimer View
+
+struct DisclaimerView: View {
+    @Environment(\.dismiss) private var dismiss
+
+    var body: some View {
+        NavigationStack {
+            ScrollView {
+                VStack(alignment: .leading, spacing: 24) {
+                    // Header
+                    VStack(spacing: 16) {
+                        ZStack {
+                            Circle()
+                                .fill(Color.orange.opacity(0.2))
+                                .frame(width: 80, height: 80)
+
+                            Image(systemName: "exclamationmark.shield.fill")
+                                .font(.system(size: 36))
+                                .foregroundColor(.orange)
+                        }
+
+                        Text("Health Disclaimer")
+                            .font(.system(.title2, design: .rounded, weight: .bold))
+                            .foregroundColor(Theme.textPrimary)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 24)
+
+                    // Not Medical Advice
+                    DisclaimerSection(
+                        title: "Not Medical Advice",
+                        content: "Breathe 478 is a wellness tool designed to guide you through the 4-7-8 breathing technique. This app is not a medical device and does not provide medical advice, diagnosis, or treatment. The content provided is for informational and relaxation purposes only."
+                    )
+
+                    // Consult Your Doctor
+                    DisclaimerSection(
+                        title: "Consult Your Doctor",
+                        content: "If you have any respiratory conditions (such as asthma or COPD), cardiovascular conditions, are pregnant, or have any other health concerns, please consult your healthcare provider before using this app. Stop using the app immediately if you experience dizziness, shortness of breath, or discomfort."
+                    )
+
+                    // HRV Data
+                    DisclaimerSection(
+                        title: "Health Data",
+                        content: "The heart rate variability (HRV) and heart rate data displayed in this app is collected from Apple Health and is intended for general wellness tracking only. This data should not be used to diagnose, treat, or prevent any medical condition."
+                    )
+
+                    // Limitation of Liability
+                    DisclaimerSection(
+                        title: "Limitation of Liability",
+                        content: "The developers of Breathe 478 shall not be held liable for any adverse effects, injuries, or damages resulting from the use of this app. Use this app at your own risk and always prioritize your health and safety."
+                    )
+
+                    // Children
+                    DisclaimerSection(
+                        title: "Children & Minors",
+                        content: "This app is not intended for children under 12. For users between 12–17, parental or guardian supervision is recommended. The breathing pattern may not be suitable for all ages."
+                    )
+
+                    Spacer(minLength: 32)
+                }
+            }
+            .background(Theme.backgroundColor)
+            .navigationTitle("Disclaimer")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Done") {
+                        dismiss()
+                    }
+                    .foregroundColor(Theme.primaryMint)
+                }
+            }
+        }
+    }
+}
+
+struct DisclaimerSection: View {
+    let title: String
+    let content: String
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
+                Circle()
+                    .fill(Color.orange.opacity(0.6))
+                    .frame(width: 6, height: 6)
+
+                Text(title)
+                    .font(.system(.headline, design: .rounded))
+                    .foregroundColor(Theme.textPrimary)
+            }
+
+            Text(content)
+                .font(.system(.body, design: .rounded))
+                .foregroundColor(Theme.textSecondary)
+                .lineSpacing(4)
+                .fixedSize(horizontal: false, vertical: true)
+        }
+        .padding(.horizontal, 20)
     }
 }
 
