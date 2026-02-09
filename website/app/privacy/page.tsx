@@ -7,7 +7,10 @@ export const metadata: Metadata = {
 
 export default function PrivacyPolicy() {
   return (
-    <main className="min-h-screen bg-[var(--background)] text-[var(--foreground)] px-6 py-20">
+    <main
+      className="min-h-screen px-6 py-20"
+      style={{ background: "#000", color: "#f5f5f7" }}
+    >
       <article className="max-w-[680px] mx-auto">
         <a
           href="/"

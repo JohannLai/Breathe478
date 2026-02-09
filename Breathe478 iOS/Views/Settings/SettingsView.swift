@@ -141,6 +141,19 @@ struct SettingsView: View {
                         }
                     }
 
+                    Link(destination: URL(string: "https://breathe478.vercel.app/privacy")!) {
+                        HStack {
+                            Label("Privacy Policy", systemImage: "hand.raised")
+                                .foregroundColor(Theme.textPrimary)
+
+                            Spacer()
+
+                            Image(systemName: "arrow.up.right")
+                                .font(.system(size: 12, weight: .semibold))
+                                .foregroundColor(Theme.textTertiary)
+                        }
+                    }
+
                     HStack {
                         Label("Version", systemImage: "number")
                             .foregroundColor(Theme.textPrimary)
