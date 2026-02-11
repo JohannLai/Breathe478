@@ -1,5 +1,8 @@
 import Foundation
 import HealthKit
+#if os(watchOS)
+import WatchKit
+#endif
 
 /// Manages HealthKit integration for HRV reading and mindful minutes - shared across iOS and watchOS
 @MainActor
@@ -28,66 +31,32 @@ final class HealthKitManager: NSObject, ObservableObject {
     }
 
     #if os(watchOS)
-    private var workoutTypesToWrite: Set<HKSampleType> {
-        [mindfulType, HKQuantityType.workoutType()]
-    }
-    #endif
+    // MARK: - Extended Runtime Session (watchOS only)
 
-    #if os(watchOS)
-    // MARK: - Workout Session (watchOS only)
+    private var extendedSession: WKExtendedRuntimeSession?
+    @Published var isSessionActive = false
 
-    private var workoutSession: HKWorkoutSession?
-    private var workoutBuilder: HKLiveWorkoutBuilder?
-    @Published var isWorkoutActive = false
+    /// Start an extended runtime session to keep app alive during breathing exercise
+    func startExtendedSession() {
+        guard extendedSession == nil else { return }
 
-    /// Start a workout session to activate heart rate sensor
-    func startWorkoutSession() async {
-        guard isHealthKitAvailable else { return }
-
-        let configuration = HKWorkoutConfiguration()
-        configuration.activityType = .mindAndBody
-        configuration.locationType = .indoor
-
-        do {
-            let session = try HKWorkoutSession(healthStore: healthStore, configuration: configuration)
-            let builder = session.associatedWorkoutBuilder()
-
-            builder.dataSource = HKLiveWorkoutDataSource(
-                healthStore: healthStore,
-                workoutConfiguration: configuration
-            )
-
-            self.workoutSession = session
-            self.workoutBuilder = builder
-
-            session.delegate = self
-            builder.delegate = self
-
-            session.startActivity(with: Date())
-            try await builder.beginCollection(at: Date())
-
-            isWorkoutActive = true
-        } catch {
-            print("Failed to start workout session: \(error)")
-        }
+        let session = WKExtendedRuntimeSession()
+        session.delegate = self
+        session.start()
+        self.extendedSession = session
+        isSessionActive = true
     }
 
-    /// End the workout session
-    func endWorkoutSession() async {
-        guard let session = workoutSession, let builder = workoutBuilder else { return }
+    /// End the extended runtime session
+    func endExtendedSession() {
+        guard let session = extendedSession else { return }
 
-        session.end()
-
-        do {
-            try await builder.endCollection(at: Date())
-            try await builder.finishWorkout()
-        } catch {
-            print("Failed to end workout session: \(error)")
+        if session.state == .running {
+            session.invalidate()
         }
 
-        workoutSession = nil
-        workoutBuilder = nil
-        isWorkoutActive = false
+        extendedSession = nil
+        isSessionActive = false
     }
     #endif
 
@@ -327,26 +296,23 @@ extension HealthKitManager {
     }
 }
 
-// MARK: - Workout Session Delegates (watchOS only)
+// MARK: - Extended Runtime Session Delegate (watchOS only)
 
 #if os(watchOS)
-extension HealthKitManager: HKWorkoutSessionDelegate {
-    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didChangeTo toState: HKWorkoutSessionState, from fromState: HKWorkoutSessionState, date: Date) {
-        // State changes handled via isWorkoutActive
+extension HealthKitManager: WKExtendedRuntimeSessionDelegate {
+    nonisolated func extendedRuntimeSessionDidStart(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        // Session started successfully
     }
 
-    nonisolated func workoutSession(_ workoutSession: HKWorkoutSession, didFailWithError error: Error) {
-        print("Workout session failed: \(error)")
-    }
-}
-
-extension HealthKitManager: HKLiveWorkoutBuilderDelegate {
-    nonisolated func workoutBuilderDidCollectEvent(_ workoutBuilder: HKLiveWorkoutBuilder) {
-        // Not needed for our use case
+    nonisolated func extendedRuntimeSessionWillExpire(_ extendedRuntimeSession: WKExtendedRuntimeSession) {
+        // Session is about to expire
     }
 
-    nonisolated func workoutBuilder(_ workoutBuilder: HKLiveWorkoutBuilder, didCollectDataOf collectedTypes: Set<HKSampleType>) {
-        // Heart rate data is being collected automatically
+    nonisolated func extendedRuntimeSession(_ extendedRuntimeSession: WKExtendedRuntimeSession, didInvalidateWith reason: WKExtendedRuntimeSessionInvalidationReason, error: (any Error)?) {
+        Task { @MainActor in
+            self.extendedSession = nil
+            self.isSessionActive = false
+        }
     }
 }
 #endif

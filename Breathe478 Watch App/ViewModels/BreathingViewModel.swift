@@ -148,10 +148,8 @@ final class BreathingViewModel: NSObject, ObservableObject {
             }
         }
 
-        // Start workout session to activate heart rate sensor + keep app alive
-        Task {
-            await healthKitManager.startWorkoutSession()
-        }
+        // Start extended runtime session to keep app alive during breathing
+        healthKitManager.startExtendedSession()
 
         // Fetch baseline HRV in background (non-blocking) early
         Task {
@@ -227,10 +225,8 @@ final class BreathingViewModel: NSObject, ObservableObject {
     func reset() {
         stopTimers()
 
-        // End workout session
-        Task {
-            await healthKitManager.endWorkoutSession()
-        }
+        // End extended runtime session
+        healthKitManager.endExtendedSession()
 
         state = .ready
         currentCycle = 1
@@ -295,8 +291,8 @@ final class BreathingViewModel: NSObject, ObservableObject {
 
         sessionSaved = true
 
-        // End workout session after all data is fetched and saved
-        await healthKitManager.endWorkoutSession()
+        // End extended runtime session after all data is fetched and saved
+        healthKitManager.endExtendedSession()
     }
 
     // MARK: - Private Methods
