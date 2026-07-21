@@ -6,7 +6,7 @@
   "hero": {
     "headline1": "Breathe.",
     "headline2": "Feel calm.",
-    "subtitle": "Master the scientifically-backed 4-7-8 breathing technique. Beautiful animations. Haptic guidance. HRV tracking.",
+    "subtitle": "A gentle guide to 4-7-8 breathing, with calming visuals, haptic cues, and optional Apple Health insights.",
     "platforms": "Available on iPhone and Apple Watch.",
     "downloadOn": "Download on the",
     "appStore": "App Store"
@@ -14,8 +14,8 @@
   "technique": {
     "label": "The Technique",
     "title1": "4-7-8.",
-    "title2": "Three numbers that change everything.",
-    "description": "Developed by Dr. Andrew Weil, the 4-7-8 breathing technique is a natural tranquilizer for the nervous system. Four cycles is all it takes.",
+    "title2": "A simple rhythm for mindful breathing.",
+    "description": "Popularized by Dr. Andrew Weil, the 4-7-8 pattern is commonly used as a relaxation practice. Start gently, never strain, and use a pace that feels comfortable.",
     "seconds": "seconds",
     "inhale": "Inhale",
     "inhaleDesc": "Breathe in quietly through your nose",
@@ -43,37 +43,48 @@
     "tag1": "Practice anywhere",
     "tag2": "Haptic coaching",
     "tag3": "Session tracking",
-    "tag4": "HRV monitoring"
+    "tag4": "HRV reference"
   },
   "health": {
     "label": "Health",
-    "title1": "Science-backed insights.",
+    "title1": "Personal wellness trends.",
     "title2": "Powered by HealthKit.",
     "card1Title": "Heart Rate Variability",
-    "card1Desc": "Track your HRV before and after each session. See how breathing exercises improve your autonomic nervous system over time.",
+    "card1Desc": "View HRV values available from Apple Health alongside your session history. HRV varies for many reasons and does not measure the effect of a single session.",
     "card2Title": "Heart Rate",
-    "card2Desc": "Monitor real-time heart rate during sessions. Watch your body respond as you breathe with rhythm and intention.",
+    "card2Desc": "Review heart rate samples available from Apple Health around your practice. These values are for general wellness context, not medical interpretation.",
     "card3Title": "Mindful Minutes",
     "card3Desc": "Every session automatically saves to Apple Health as mindful minutes. Your practice counts toward your daily goals."
   },
   "benefits": {
     "title": "Why 4-7-8?",
-    "b1Title": "Reduce Anxiety",
-    "b1Desc": "Activate your parasympathetic nervous system in under 2 minutes.",
-    "b2Title": "Sleep Better",
-    "b2Desc": "Use as a pre-sleep routine to quiet racing thoughts.",
-    "b3Title": "Lower Stress",
-    "b3Desc": "Controlled breathing lowers cortisol levels naturally.",
-    "b4Title": "Improve Focus",
-    "b4Desc": "Reset your attention with a brief breathing break.",
+    "b1Title": "Support Relaxation",
+    "b1Desc": "A structured breathing rhythm may help some people settle and unwind.",
+    "b2Title": "Prepare for Sleep",
+    "b2Desc": "Use it as an optional wind-down routine before bed.",
+    "b3Title": "Manage Everyday Stress",
+    "b3Desc": "Pause and reconnect with your breathing during a busy day.",
+    "b4Title": "Take a Mindful Break",
+    "b4Desc": "Bring your attention back to the present for a few moments.",
     "b5Title": "Build Consistency",
     "b5Desc": "Streaks, history, and insights keep you motivated.",
     "b6Title": "Stay Private",
     "b6Desc": "All data stays on your device. No accounts. No tracking."
   },
+  "safety": {
+    "label": "Practice Safely",
+    "title": "Comfort comes before the count.",
+    "description": "4-7-8 Breathe is a general wellness and relaxation tool, not a medical device. It does not diagnose, treat, or prevent any condition.",
+    "items": [
+      "Start with a short session and never force or strain a breath hold.",
+      "Stop and return to normal breathing if you feel dizzy, short of breath, faint, or uncomfortable.",
+      "Do not practice while driving, in water, or during any activity where dizziness could be dangerous.",
+      "Ask a healthcare professional before use if you have a respiratory or cardiovascular condition, are pregnant, or have other health concerns."
+    ]
+  },
   "privacy": {
     "sectionTitle": "Your privacy is everything.",
-    "sectionDesc": "4-7-8 Breathe processes everything on-device. No accounts. No cloud. No tracking. Your health data never leaves your iPhone or Apple Watch."
+    "sectionDesc": "The native app keeps session history on your devices and does not send HealthKit data to our servers. No account, advertising, or in-app tracking is required."
   },
   "cta": {
     "title1": "Start breathing.",
@@ -89,11 +100,11 @@
   "privacyPage": {
     "back": "Back",
     "title": "Privacy Policy",
-    "lastUpdated": "Last updated: February 8, 2026",
+    "lastUpdated": "Last updated: July 21, 2026",
     "overviewTitle": "Overview",
-    "overviewText": "4-7-8 Breathe (\"the App\") is designed with your privacy as a top priority. We do not collect, store, or transmit any personal data. Everything stays on your device.",
+    "overviewText": "4-7-8 Breathe (\"the App\") is designed to keep your breathing history and health information under your control. The developer does not receive your App session history, HealthKit data, or health measurements.",
     "dataCollectionTitle": "Data Collection",
-    "dataCollectionText": "The App does <strong>not</strong> collect any personal information. Specifically:",
+    "dataCollectionText": "The native App does <strong>not</strong> send personal or health information to the developer. Specifically:",
     "dataCollectionItems": [
       "No account creation or sign-in required",
       "No analytics or tracking SDKs",
@@ -106,16 +117,20 @@
     "healthDataItems": [
       "Accessed only with your explicit permission",
       "Processed entirely on your device",
-      "Never transmitted to any server",
-      "Never shared with any third party"
+      "May sync between your paired iPhone and Apple Watch using Apple's WatchConnectivity framework",
+      "Never transmitted to the developer or an advertising service"
     ],
-    "healthDataFooter": "All health data is managed by Apple's HealthKit framework and subject to Apple's privacy policies.",
+    "healthDataFooter": "HealthKit permissions are controlled through Apple system settings. The App may also store selected session-linked values locally so they can appear in your history.",
     "storageTitle": "On-Device Storage",
-    "storageText": "Your breathing session history and preferences are stored locally on your iPhone and Apple Watch using SwiftData. This data is not accessible to us or any third party.",
+    "storageText": "Your breathing session history and preferences are stored locally on your iPhone and Apple Watch using SwiftData and system preferences. They remain until you delete available history entries, reset or uninstall the App, or otherwise remove the data through device controls.",
+    "controlsTitle": "Your Controls",
+    "controlsText": "You can revoke Health access at any time in Apple Settings under Privacy & Security > Health. You can delete individual history entries in the iPhone App. To remove remaining local App data, uninstall the App from the relevant device. Mindful minutes written to Apple Health can be reviewed or deleted in the Health app.",
     "networkTitle": "Network Usage",
-    "networkText": "The App does not make any network requests. It works entirely offline.",
+    "networkText": "Core breathing sessions work offline. The native App does not upload your session or HealthKit data to a developer-operated server. Opening external support or privacy links requires a network connection.",
+    "websiteAnalyticsTitle": "Website Analytics",
+    "websiteAnalyticsText": "This website uses Vercel Web Analytics to understand aggregate site traffic and performance. Website analytics are separate from the native App and do not receive HealthKit data or App session history. Vercel processes website usage and device information under its own privacy terms.",
     "childrenTitle": "Children's Privacy",
-    "childrenText": "The App does not collect any data from anyone, including children under the age of 13.",
+    "childrenText": "The App is not directed to children. The developer does not knowingly receive children's App session history or HealthKit data. A parent or guardian should supervise a minor's use of breathing exercises and Apple Health features.",
     "changesTitle": "Changes to This Policy",
     "changesText": "We may update this Privacy Policy from time to time. Any changes will be reflected on this page with an updated revision date.",
     "contactTitle": "Contact",

@@ -6,7 +6,7 @@
   "hero": {
     "headline1": "呼吸。",
     "headline2": "感受寧靜。",
-    "subtitle": "掌握經科學驗證的 4-7-8 呼吸法。精美動畫，觸覺引導，HRV 追蹤。",
+    "subtitle": "溫和引導 4-7-8 呼吸，搭配舒緩動畫、觸覺提示和可選的 Apple 健康資料參考。",
     "platforms": "支援 iPhone 和 Apple Watch。",
     "downloadOn": "下載於",
     "appStore": "App Store"
@@ -14,8 +14,8 @@
   "technique": {
     "label": "呼吸技巧",
     "title1": "4-7-8。",
-    "title2": "三個數字，改變一切。",
-    "description": "由 Andrew Weil 博士開發，4-7-8 呼吸法是一種天然的神經系統鎮定劑。只需四個循環。",
+    "title2": "一種簡單的正念呼吸節律。",
+    "description": "4-7-8 呼吸法由 Andrew Weil 博士推廣，常被用作放鬆練習。請循序漸進，不要勉強閉氣，並選擇讓自己舒適的節奏。",
     "seconds": "秒",
     "inhale": "吸氣",
     "inhaleDesc": "用鼻子輕輕吸氣",
@@ -43,37 +43,48 @@
     "tag1": "隨時練習",
     "tag2": "觸覺指導",
     "tag3": "記錄追蹤",
-    "tag4": "HRV 監測"
+    "tag4": "HRV 參考"
   },
   "health": {
     "label": "健康",
-    "title1": "科學支撐的洞察。",
+    "title1": "個人健康趨勢參考。",
     "title2": "由 HealthKit 驅動。",
     "card1Title": "心率變異性",
-    "card1Desc": "追蹤每次練習前後的 HRV。了解呼吸練習如何改善你的自主神經系統。",
+    "card1Desc": "在練習記錄旁查看 Apple 健康中已有的 HRV 數值。HRV 會受多種因素影響，不能用於衡量單次練習的效果。",
     "card2Title": "心率",
-    "card2Desc": "練習時即時監測心率。觀察你的身體如何隨著有節奏的呼吸作出反應。",
+    "card2Desc": "查看 Apple 健康中練習時段附近的心率樣本。這些數值僅供一般健康參考，不用於醫學判斷。",
     "card3Title": "正念分鐘數",
     "card3Desc": "每次練習自動儲存到 Apple 健康作為正念分鐘數。你的練習計入每日目標。"
   },
   "benefits": {
     "title": "為什麼選擇 4-7-8？",
-    "b1Title": "緩解焦慮",
-    "b1Desc": "在不到 2 分鐘內啟動副交感神經系統。",
-    "b2Title": "改善睡眠",
-    "b2Desc": "作為睡前儀式，平息紛繁的思緒。",
-    "b3Title": "降低壓力",
-    "b3Desc": "有控制的呼吸能自然降低皮質醇水平。",
-    "b4Title": "提升專注",
-    "b4Desc": "透過短暫的呼吸休息重置注意力。",
+    "b1Title": "輔助放鬆",
+    "b1Desc": "有節律的呼吸練習可能幫助部分人逐漸平靜下來。",
+    "b2Title": "準備入睡",
+    "b2Desc": "可選擇將它作為睡前放鬆流程的一部分。",
+    "b3Title": "應對日常壓力",
+    "b3Desc": "在忙碌的一天中暫停片刻，重新關注呼吸。",
+    "b4Title": "短暫正念休息",
+    "b4Desc": "用幾分鐘把注意力帶回當下。",
     "b5Title": "建立習慣",
     "b5Desc": "連續記錄、歷史資料和洞察讓你保持動力。",
     "b6Title": "隱私至上",
     "b6Desc": "所有資料留在你的裝置上。無需帳戶，無追蹤。"
   },
+  "safety": {
+    "label": "安全練習",
+    "title": "舒適比完成計數更重要。",
+    "description": "4-7-8 呼吸是一款一般健康與放鬆工具，不是醫療器材，也不用於診斷、治療或預防任何疾病。",
+    "items": [
+      "初次使用請從較短練習開始，不要強迫或勉強閉氣。",
+      "如出現頭暈、呼吸急促、近乎昏厥或其他不適，請立即停止並恢復自然呼吸。",
+      "請勿在駕駛、水中或任何頭暈可能造成危險的活動中練習。",
+      "如有呼吸系統或心血管疾病、處於孕期或有其他健康顧慮，請先諮詢醫療專業人員。"
+    ]
+  },
   "privacy": {
     "sectionTitle": "你的隱私至關重要。",
-    "sectionDesc": "4-7-8 呼吸在裝置上處理一切。無需帳戶，無需雲端，無追蹤。你的健康資料永遠不會離開你的 iPhone 或 Apple Watch。"
+    "sectionDesc": "原生應用程式將練習記錄儲存在你的裝置上，不會把 HealthKit 資料傳送到我們的伺服器。無需帳戶、廣告或應用程式內追蹤。"
   },
   "cta": {
     "title1": "開始呼吸。",
@@ -89,11 +100,11 @@
   "privacyPage": {
     "back": "返回",
     "title": "隱私權政策",
-    "lastUpdated": "最後更新：2026 年 2 月 8 日",
+    "lastUpdated": "最後更新：2026 年 7 月 21 日",
     "overviewTitle": "概述",
-    "overviewText": "4-7-8 呼吸（「本應用程式」）將您的隱私視為最高優先。我們不收集、儲存或傳輸任何個人資料。一切都保留在您的裝置上。",
+    "overviewText": "4-7-8 呼吸（「本應用程式」）致力於讓您自行掌控練習記錄和健康資訊。開發者不會收到您的應用程式練習記錄、HealthKit 資料或健康測量值。",
     "dataCollectionTitle": "資料收集",
-    "dataCollectionText": "本應用程式<strong>不</strong>收集任何個人資訊。具體來說：",
+    "dataCollectionText": "原生應用程式<strong>不會</strong>把個人或健康資訊傳送給開發者。具體來說：",
     "dataCollectionItems": [
       "無需建立帳戶或登入",
       "無分析或追蹤 SDK",
@@ -106,16 +117,20 @@
     "healthDataItems": [
       "僅在您明確授權後存取",
       "完全在您的裝置上處理",
-      "從不傳輸到任何伺服器",
-      "從不與任何第三方共享"
+      "可能透過 Apple 的 WatchConnectivity 框架在配對的 iPhone 與 Apple Watch 之間同步",
+      "不會傳送給開發者或廣告服務"
     ],
-    "healthDataFooter": "所有健康資料均由 Apple 的 HealthKit 框架管理，並受 Apple 隱私權政策的約束。",
+    "healthDataFooter": "HealthKit 權限透過 Apple 系統設定管理。為在歷史記錄中顯示，應用程式也可能在本機儲存與練習相關的部分數值。",
     "storageTitle": "本機儲存",
-    "storageText": "您的呼吸練習歷史和偏好使用 SwiftData 儲存在您的 iPhone 和 Apple Watch 本機。我們或任何第三方均無法存取這些資料。",
+    "storageText": "您的呼吸練習歷史和偏好透過 SwiftData 和系統偏好設定儲存在 iPhone 與 Apple Watch 本機，直到您刪除可用的歷史記錄、重設或解除安裝應用程式，或透過裝置控制移除相關資料。",
+    "controlsTitle": "您的控制權",
+    "controlsText": "您可以隨時在 Apple 設定的「隱私權與安全性 > 健康」中撤回健康資料權限；可以在 iPhone 應用程式中刪除單筆歷史記錄；如需移除裝置上其餘本機應用程式資料，請從相應裝置解除安裝應用程式。寫入 Apple 健康的正念分鐘數可在「健康」應用程式中查看或刪除。",
     "networkTitle": "網路使用",
-    "networkText": "本應用程式不發出任何網路請求。完全離線運行。",
+    "networkText": "核心呼吸練習可離線運作。原生應用程式不會把您的練習記錄或 HealthKit 資料上傳到開發者營運的伺服器。開啟外部支援或隱私連結時需要網路連線。",
+    "websiteAnalyticsTitle": "網站造訪分析",
+    "websiteAnalyticsText": "本網站使用 Vercel Web Analytics 了解彙總的網站流量和效能。網站分析與原生應用程式相互獨立，不會收到 HealthKit 資料或應用程式練習記錄。Vercel 會依據其隱私條款處理網站使用情況和裝置資訊。",
     "childrenTitle": "兒童隱私",
-    "childrenText": "本應用程式不收集任何人的資料，包括 13 歲以下的兒童。",
+    "childrenText": "本應用程式並非為兒童設計。開發者不會主動接收兒童的應用程式練習記錄或 HealthKit 資料。未成年人使用呼吸練習和 Apple 健康功能時，應由父母或監護人監督。",
     "changesTitle": "政策變更",
     "changesText": "我們可能會不時更新本隱私權政策。任何變更都將在此頁面上反映，並更新修訂日期。",
     "contactTitle": "聯絡我們",

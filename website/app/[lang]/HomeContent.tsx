@@ -504,6 +504,45 @@ function BenefitsSection({ t }: { t: Dictionary }) {
   );
 }
 
+/* ─── Safety Section ─── */
+function SafetySection({ t }: { t: Dictionary }) {
+  return (
+    <section className="py-32 px-6">
+      <div className="max-w-[780px] mx-auto">
+        <RevealSection>
+          <div
+            className="rounded-3xl p-8 sm:p-12"
+            style={{
+              background: "var(--card-bg)",
+              border: "1px solid var(--card-border)",
+            }}
+          >
+            <p className="text-sm font-medium text-[var(--accent-blue)] tracking-widest uppercase mb-4">
+              {t.safety.label}
+            </p>
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight mb-5">
+              {t.safety.title}
+            </h2>
+            <p className="text-base text-[var(--text-secondary)] leading-relaxed mb-7">
+              {t.safety.description}
+            </p>
+            <ul className="space-y-4 text-sm text-[var(--text-secondary)] leading-relaxed">
+              {t.safety.items.map((item) => (
+                <li key={item} className="flex gap-3">
+                  <span className="text-[var(--accent-teal)]" aria-hidden="true">
+                    •
+                  </span>
+                  <span>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </RevealSection>
+      </div>
+    </section>
+  );
+}
+
 /* ─── Privacy Section ─── */
 function PrivacySection({ t }: { t: Dictionary }) {
   return (
@@ -605,6 +644,8 @@ export default function HomeContent({ t, lang }: { t: Dictionary; lang: string }
         <HealthSection t={t} />
         <div className="section-divider" />
         <BenefitsSection t={t} />
+        <div className="section-divider" />
+        <SafetySection t={t} />
         <div className="section-divider" />
         <PrivacySection t={t} />
         <CTASection t={t} />

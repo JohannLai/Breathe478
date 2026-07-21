@@ -78,9 +78,23 @@ export default async function PrivacyPolicy({
 
           <section>
             <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">
+              {p.controlsTitle}
+            </h2>
+            <p>{p.controlsText}</p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">
               {p.networkTitle}
             </h2>
             <p>{p.networkText}</p>
+          </section>
+
+          <section>
+            <h2 className="text-lg font-semibold text-[var(--foreground)] mb-3">
+              {p.websiteAnalyticsTitle}
+            </h2>
+            <p>{p.websiteAnalyticsText}</p>
           </section>
 
           <section>

@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "4-7-8 Breathe — Calm Your Mind in Seconds",
+  title: "4-7-8 Breathe — Guided Mindful Breathing",
   description:
-    "Master the scientifically-backed 4-7-8 breathing technique with beautiful animations, haptic guidance, and HRV tracking on iPhone and Apple Watch.",
+    "A gentle guide to 4-7-8 breathing with calming animations, haptic cues, and optional Apple Health insights on iPhone and Apple Watch.",
   openGraph: {
     title: "4-7-8 Breathe",
     description:
-      "Calm your mind in seconds with the 4-7-8 breathing technique. Available on iPhone and Apple Watch.",
+      "A gentle 4-7-8 breathing guide for iPhone and Apple Watch.",
     type: "website",
   },
 };
